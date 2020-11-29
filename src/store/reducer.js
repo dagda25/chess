@@ -1,0 +1,532 @@
+import {ActionType} from "./action";
+
+const initialState = {
+  boardState: [
+    {
+      x: 1,
+      y: 1,
+      id: 1,
+      owner: `black`,
+      piece: `rook`,
+      pieceId: 1
+    },
+    {
+      x: 2,
+      y: 1,
+      id: 2,
+      owner: `black`,
+      piece: `knight`,
+      pieceId: 2
+    },
+    {
+      x: 3,
+      y: 1,
+      id: 3,
+      owner: `black`,
+      piece: `bishop`,
+      pieceId: 3
+    },
+    {
+      x: 4,
+      y: 1,
+      id: 4,
+      owner: `black`,
+      piece: `queen`,
+      pieceId: 4
+    },
+    {
+      x: 5,
+      y: 1,
+      id: 5,
+      owner: `black`,
+      piece: `king`,
+      pieceId: 5
+    },
+    {
+      x: 6,
+      y: 1,
+      id: 6,
+      owner: `black`,
+      piece: `bishop`,
+      pieceId: 6
+    },
+    {
+      x: 7,
+      y: 1,
+      id: 7,
+      owner: `black`,
+      piece: `knight`,
+      pieceId: 7
+    },
+    {
+      x: 8,
+      y: 1,
+      id: 8,
+      owner: `black`,
+      piece: `rook`,
+      pieceId: 8
+    },
+    {
+      x: 1,
+      y: 2,
+      id: 9,
+      owner: `black`,
+      piece: `pawn`,
+      pieceId: 9
+    },
+    {
+      x: 2,
+      y: 2,
+      id: 10,
+      owner: `black`,
+      piece: `pawn`,
+      pieceId: 10
+    },
+    {
+      x: 3,
+      y: 2,
+      id: 11,
+      owner: `black`,
+      piece: `pawn`,
+      pieceId: 11
+    },
+    {
+      x: 4,
+      y: 2,
+      id: 12,
+      owner: `black`,
+      piece: `pawn`,
+      pieceId: 12
+    },
+    {
+      x: 5,
+      y: 2,
+      id: 13,
+      owner: `black`,
+      piece: `pawn`,
+      pieceId: 13
+    },
+    {
+      x: 6,
+      y: 2,
+      id: 14,
+      owner: `black`,
+      piece: `pawn`,
+      pieceId: 14
+    },
+    {
+      x: 7,
+      y: 2,
+      id: 15,
+      owner: `black`,
+      piece: `pawn`,
+      pieceId: 15
+    },
+    {
+      x: 8,
+      y: 2,
+      id: 16,
+      owner: `black`,
+      piece: `pawn`,
+      pieceId: 16
+    },
+    {
+      x: 1,
+      y: 3,
+      id: 17,
+      owner: null,
+      piece: null,
+      pieceId: null
+    },
+    {
+      x: 2,
+      y: 3,
+      id: 18,
+      owner: null,
+      piece: null,
+      pieceId: null
+    },
+    {
+      x: 3,
+      y: 3,
+      id: 19,
+      owner: null,
+      piece: null,
+      pieceId: null
+    },
+    {
+      x: 4,
+      y: 3,
+      id: 20,
+      owner: null,
+      piece: null,
+      pieceId: null
+    },
+    {
+      x: 5,
+      y: 3,
+      id: 21,
+      owner: null,
+      piece: null,
+      pieceId: null
+    },
+    {
+      x: 6,
+      y: 3,
+      id: 22,
+      owner: null,
+      piece: null,
+      pieceId: null
+    },
+    {
+      x: 7,
+      y: 3,
+      id: 23,
+      owner: null,
+      piece: null,
+      pieceId: null
+    },
+    {
+      x: 8,
+      y: 3,
+      id: 24,
+      owner: null,
+      piece: null,
+      pieceId: null
+    },
+
+    {
+      x: 1,
+      y: 4,
+      id: 25,
+      owner: null,
+      piece: null,
+      pieceId: null
+    },
+    {
+      x: 2,
+      y: 4,
+      id: 26,
+      owner: null,
+      piece: null,
+      pieceId: null
+    },
+    {
+      x: 3,
+      y: 4,
+      id: 27,
+      owner: null,
+      piece: null,
+      pieceId: null
+    },
+    {
+      x: 4,
+      y: 4,
+      id: 28,
+      owner: null,
+      piece: null,
+      pieceId: null
+    },
+    {
+      x: 5,
+      y: 4,
+      id: 29,
+      owner: null,
+      piece: null,
+      pieceId: null
+    },
+    {
+      x: 6,
+      y: 4,
+      id: 30,
+      owner: null,
+      piece: null,
+      pieceId: null
+    },
+    {
+      x: 7,
+      y: 4,
+      id: 31,
+      owner: null,
+      piece: null,
+      pieceId: null
+    },
+    {
+      x: 8,
+      y: 4,
+      id: 32,
+      owner: null,
+      piece: null,
+      pieceId: null
+    },
+    {
+      x: 1,
+      y: 5,
+      id: 33,
+      owner: null,
+      piece: null,
+      pieceId: null
+    },
+    {
+      x: 2,
+      y: 5,
+      id: 34,
+      owner: null,
+      piece: null,
+      pieceId: null
+    },
+    {
+      x: 3,
+      y: 5,
+      id: 35,
+      owner: null,
+      piece: null,
+      pieceId: null
+    },
+    {
+      x: 4,
+      y: 5,
+      id: 36,
+      owner: null,
+      piece: null,
+      pieceId: null
+    },
+    {
+      x: 5,
+      y: 5,
+      id: 37,
+      owner: null,
+      piece: null,
+      pieceId: null
+    },
+    {
+      x: 6,
+      y: 5,
+      id: 38,
+      owner: null,
+      piece: null,
+      pieceId: null
+    },
+    {
+      x: 7,
+      y: 5,
+      id: 39,
+      owner: null,
+      piece: null,
+      pieceId: null
+    },
+    {
+      x: 8,
+      y: 5,
+      id: 40,
+      owner: null,
+      piece: null,
+      pieceId: null
+    },
+    {
+      x: 1,
+      y: 6,
+      id: 41,
+      owner: null,
+      piece: null,
+      pieceId: null
+    },
+    {
+      x: 2,
+      y: 6,
+      id: 42,
+      owner: null,
+      piece: null,
+      pieceId: null
+    },
+    {
+      x: 3,
+      y: 6,
+      id: 43,
+      owner: null,
+      piece: null,
+      pieceId: null
+    },
+    {
+      x: 4,
+      y: 6,
+      id: 44,
+      owner: null,
+      piece: null,
+      pieceId: null
+    },
+    {
+      x: 5,
+      y: 6,
+      id: 45,
+      owner: null,
+      piece: null,
+      pieceId: null
+    },
+    {
+      x: 6,
+      y: 6,
+      id: 46,
+      owner: null,
+      piece: null,
+      pieceId: null
+    },
+    {
+      x: 7,
+      y: 6,
+      id: 47,
+      owner: null,
+      piece: null,
+      pieceId: null
+    },
+    {
+      x: 8,
+      y: 6,
+      id: 48,
+      owner: null,
+      piece: null,
+      pieceId: null
+    },
+    {
+      x: 1,
+      y: 7,
+      id: 49,
+      owner: `white`,
+      piece: `pawn`,
+      pieceId: 17
+    },
+    {
+      x: 2,
+      y: 7,
+      id: 50,
+      owner: `white`,
+      piece: `pawn`,
+      pieceId: 18
+    },
+    {
+      x: 3,
+      y: 7,
+      id: 51,
+      owner: `white`,
+      piece: `pawn`,
+      pieceId: 19
+    },
+    {
+      x: 4,
+      y: 7,
+      id: 52,
+      owner: `white`,
+      piece: `pawn`,
+      pieceId: 20
+    },
+    {
+      x: 5,
+      y: 7,
+      id: 53,
+      owner: `white`,
+      piece: `pawn`,
+      pieceId: 21
+    },
+    {
+      x: 6,
+      y: 7,
+      id: 54,
+      owner: `white`,
+      piece: `pawn`,
+      pieceId: 22
+    },
+    {
+      x: 7,
+      y: 7,
+      id: 55,
+      owner: `white`,
+      piece: `pawn`,
+      pieceId: 23
+    },
+    {
+      x: 8,
+      y: 7,
+      id: 56,
+      owner: `white`,
+      piece: `pawn`,
+      pieceId: 24
+    },
+    {
+      x: 1,
+      y: 8,
+      id: 57,
+      owner: `white`,
+      piece: `rook`,
+      pieceId: 25
+    },
+    {
+      x: 2,
+      y: 8,
+      id: 58,
+      owner: `white`,
+      piece: `knight`,
+      pieceId: 26
+    },
+    {
+      x: 3,
+      y: 8,
+      id: 59,
+      owner: `white`,
+      piece: `bishop`,
+      pieceId: 27
+    },
+    {
+      x: 4,
+      y: 8,
+      id: 60,
+      owner: `white`,
+      piece: `queen`,
+      pieceId: 28
+    },
+    {
+      x: 5,
+      y: 8,
+      id: 61,
+      owner: `white`,
+      piece: `king`,
+      pieceId: 29
+    },
+    {
+      x: 6,
+      y: 8,
+      id: 62,
+      owner: `white`,
+      piece: `bishop`,
+      pieceId: 30
+    },
+    {
+      x: 7,
+      y: 8,
+      id: 63,
+      owner: `white`,
+      piece: `knight`,
+      pieceId: 31
+    },
+    {
+      x: 8,
+      y: 8,
+      id: 64,
+      owner: `white`,
+      piece: `rook`,
+      pieceId: 32
+    },
+  ],
+};
+
+const reducer = (state = initialState, action) => {
+  switch (action.type) {
+    case ActionType.MOVE:
+      return state;
+    default:
+      return state;
+  }
+
+};
+
+
+export {reducer};
