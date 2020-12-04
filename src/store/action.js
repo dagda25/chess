@@ -1,10 +1,15 @@
 export const ActionType = {
-  MOVE: `MOVE`,
+  START_MOVE: `START_MOVE`,
+  FINISH_MOVE: `FINISH_MOVE`, 
 };
 
 export const ActionCreator = {
-  getOfferList: (data) => ({
-    type: ActionType.MOVE,
+  startMove: (data) => ({
+    type: ActionType.START_MOVE,
+    payload: data
+  }),
+  finishMove: (data) => ({
+    type: ActionType.FINISH_MOVE,
     payload: data
   }),
 };

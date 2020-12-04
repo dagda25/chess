@@ -8,7 +8,8 @@ const initialState = {
       id: 1,
       owner: `black`,
       piece: `rook`,
-      pieceId: 1
+      pieceId: 1,
+      possibleMove: false,
     },
     {
       x: 2,
@@ -16,7 +17,8 @@ const initialState = {
       id: 2,
       owner: `black`,
       piece: `knight`,
-      pieceId: 2
+      pieceId: 2,
+      possibleMove: false,
     },
     {
       x: 3,
@@ -24,7 +26,8 @@ const initialState = {
       id: 3,
       owner: `black`,
       piece: `bishop`,
-      pieceId: 3
+      pieceId: 3,
+      possibleMove: false,
     },
     {
       x: 4,
@@ -32,7 +35,8 @@ const initialState = {
       id: 4,
       owner: `black`,
       piece: `queen`,
-      pieceId: 4
+      pieceId: 4,
+      possibleMove: false,
     },
     {
       x: 5,
@@ -40,7 +44,8 @@ const initialState = {
       id: 5,
       owner: `black`,
       piece: `king`,
-      pieceId: 5
+      pieceId: 5,
+      possibleMove: false,
     },
     {
       x: 6,
@@ -48,7 +53,8 @@ const initialState = {
       id: 6,
       owner: `black`,
       piece: `bishop`,
-      pieceId: 6
+      pieceId: 6,
+      possibleMove: false,
     },
     {
       x: 7,
@@ -56,7 +62,8 @@ const initialState = {
       id: 7,
       owner: `black`,
       piece: `knight`,
-      pieceId: 7
+      pieceId: 7,
+      possibleMove: false,
     },
     {
       x: 8,
@@ -64,7 +71,8 @@ const initialState = {
       id: 8,
       owner: `black`,
       piece: `rook`,
-      pieceId: 8
+      pieceId: 8,
+      possibleMove: false,
     },
     {
       x: 1,
@@ -72,7 +80,8 @@ const initialState = {
       id: 9,
       owner: `black`,
       piece: `pawn`,
-      pieceId: 9
+      pieceId: 9,
+      possibleMove: false,
     },
     {
       x: 2,
@@ -80,7 +89,8 @@ const initialState = {
       id: 10,
       owner: `black`,
       piece: `pawn`,
-      pieceId: 10
+      pieceId: 10,
+      possibleMove: false,
     },
     {
       x: 3,
@@ -88,7 +98,8 @@ const initialState = {
       id: 11,
       owner: `black`,
       piece: `pawn`,
-      pieceId: 11
+      pieceId: 11,
+      possibleMove: false,
     },
     {
       x: 4,
@@ -96,7 +107,8 @@ const initialState = {
       id: 12,
       owner: `black`,
       piece: `pawn`,
-      pieceId: 12
+      pieceId: 12,
+      possibleMove: false,
     },
     {
       x: 5,
@@ -104,7 +116,8 @@ const initialState = {
       id: 13,
       owner: `black`,
       piece: `pawn`,
-      pieceId: 13
+      pieceId: 13,
+      possibleMove: false,
     },
     {
       x: 6,
@@ -112,7 +125,8 @@ const initialState = {
       id: 14,
       owner: `black`,
       piece: `pawn`,
-      pieceId: 14
+      pieceId: 14,
+      possibleMove: false,
     },
     {
       x: 7,
@@ -120,7 +134,8 @@ const initialState = {
       id: 15,
       owner: `black`,
       piece: `pawn`,
-      pieceId: 15
+      pieceId: 15,
+      possibleMove: false,
     },
     {
       x: 8,
@@ -128,7 +143,8 @@ const initialState = {
       id: 16,
       owner: `black`,
       piece: `pawn`,
-      pieceId: 16
+      pieceId: 16,
+      possibleMove: false,
     },
     {
       x: 1,
@@ -136,7 +152,8 @@ const initialState = {
       id: 17,
       owner: null,
       piece: null,
-      pieceId: null
+      pieceId: null,
+      possibleMove: false,
     },
     {
       x: 2,
@@ -144,7 +161,8 @@ const initialState = {
       id: 18,
       owner: null,
       piece: null,
-      pieceId: null
+      pieceId: null,
+      possibleMove: false,
     },
     {
       x: 3,
@@ -152,7 +170,8 @@ const initialState = {
       id: 19,
       owner: null,
       piece: null,
-      pieceId: null
+      pieceId: null,
+      possibleMove: false,
     },
     {
       x: 4,
@@ -160,7 +179,8 @@ const initialState = {
       id: 20,
       owner: null,
       piece: null,
-      pieceId: null
+      pieceId: null,
+      possibleMove: false,
     },
     {
       x: 5,
@@ -168,7 +188,8 @@ const initialState = {
       id: 21,
       owner: null,
       piece: null,
-      pieceId: null
+      pieceId: null,
+      possibleMove: false,
     },
     {
       x: 6,
@@ -176,7 +197,8 @@ const initialState = {
       id: 22,
       owner: null,
       piece: null,
-      pieceId: null
+      pieceId: null,
+      possibleMove: false,
     },
     {
       x: 7,
@@ -184,7 +206,8 @@ const initialState = {
       id: 23,
       owner: null,
       piece: null,
-      pieceId: null
+      pieceId: null,
+      possibleMove: false,
     },
     {
       x: 8,
@@ -192,7 +215,8 @@ const initialState = {
       id: 24,
       owner: null,
       piece: null,
-      pieceId: null
+      pieceId: null,
+      possibleMove: false,
     },
 
     {
@@ -201,7 +225,8 @@ const initialState = {
       id: 25,
       owner: null,
       piece: null,
-      pieceId: null
+      pieceId: null,
+      possibleMove: false,
     },
     {
       x: 2,
@@ -209,7 +234,8 @@ const initialState = {
       id: 26,
       owner: null,
       piece: null,
-      pieceId: null
+      pieceId: null,
+      possibleMove: false,
     },
     {
       x: 3,
@@ -217,15 +243,17 @@ const initialState = {
       id: 27,
       owner: null,
       piece: null,
-      pieceId: null
+      pieceId: null,
+      possibleMove: false,
     },
     {
       x: 4,
       y: 4,
       id: 28,
-      owner: null,
-      piece: null,
-      pieceId: null
+      owner: `white`,
+      piece: `queen`,
+      pieceId: null,
+      possibleMove: false,
     },
     {
       x: 5,
@@ -233,7 +261,8 @@ const initialState = {
       id: 29,
       owner: null,
       piece: null,
-      pieceId: null
+      pieceId: null,
+      possibleMove: false,
     },
     {
       x: 6,
@@ -241,7 +270,8 @@ const initialState = {
       id: 30,
       owner: null,
       piece: null,
-      pieceId: null
+      pieceId: null,
+      possibleMove: false,
     },
     {
       x: 7,
@@ -249,7 +279,8 @@ const initialState = {
       id: 31,
       owner: null,
       piece: null,
-      pieceId: null
+      pieceId: null,
+      possibleMove: false,
     },
     {
       x: 8,
@@ -257,7 +288,8 @@ const initialState = {
       id: 32,
       owner: null,
       piece: null,
-      pieceId: null
+      pieceId: null,
+      possibleMove: false,
     },
     {
       x: 1,
@@ -265,7 +297,8 @@ const initialState = {
       id: 33,
       owner: null,
       piece: null,
-      pieceId: null
+      pieceId: null,
+      possibleMove: false,
     },
     {
       x: 2,
@@ -273,7 +306,8 @@ const initialState = {
       id: 34,
       owner: null,
       piece: null,
-      pieceId: null
+      pieceId: null,
+      possibleMove: false,
     },
     {
       x: 3,
@@ -281,7 +315,8 @@ const initialState = {
       id: 35,
       owner: null,
       piece: null,
-      pieceId: null
+      pieceId: null,
+      possibleMove: false,
     },
     {
       x: 4,
@@ -289,7 +324,8 @@ const initialState = {
       id: 36,
       owner: null,
       piece: null,
-      pieceId: null
+      pieceId: null,
+      possibleMove: false,
     },
     {
       x: 5,
@@ -297,7 +333,8 @@ const initialState = {
       id: 37,
       owner: null,
       piece: null,
-      pieceId: null
+      pieceId: null,
+      possibleMove: false,
     },
     {
       x: 6,
@@ -305,7 +342,8 @@ const initialState = {
       id: 38,
       owner: null,
       piece: null,
-      pieceId: null
+      pieceId: null,
+      possibleMove: false,
     },
     {
       x: 7,
@@ -313,7 +351,8 @@ const initialState = {
       id: 39,
       owner: null,
       piece: null,
-      pieceId: null
+      pieceId: null,
+      possibleMove: false,
     },
     {
       x: 8,
@@ -321,7 +360,8 @@ const initialState = {
       id: 40,
       owner: null,
       piece: null,
-      pieceId: null
+      pieceId: null,
+      possibleMove: false,
     },
     {
       x: 1,
@@ -329,7 +369,8 @@ const initialState = {
       id: 41,
       owner: null,
       piece: null,
-      pieceId: null
+      pieceId: null,
+      possibleMove: false,
     },
     {
       x: 2,
@@ -337,7 +378,8 @@ const initialState = {
       id: 42,
       owner: null,
       piece: null,
-      pieceId: null
+      pieceId: null,
+      possibleMove: false,
     },
     {
       x: 3,
@@ -345,7 +387,8 @@ const initialState = {
       id: 43,
       owner: null,
       piece: null,
-      pieceId: null
+      pieceId: null,
+      possibleMove: false,
     },
     {
       x: 4,
@@ -353,7 +396,8 @@ const initialState = {
       id: 44,
       owner: null,
       piece: null,
-      pieceId: null
+      pieceId: null,
+      possibleMove: false,
     },
     {
       x: 5,
@@ -361,7 +405,8 @@ const initialState = {
       id: 45,
       owner: null,
       piece: null,
-      pieceId: null
+      pieceId: null,
+      possibleMove: false,
     },
     {
       x: 6,
@@ -369,7 +414,8 @@ const initialState = {
       id: 46,
       owner: null,
       piece: null,
-      pieceId: null
+      pieceId: null,
+      possibleMove: false,
     },
     {
       x: 7,
@@ -377,7 +423,8 @@ const initialState = {
       id: 47,
       owner: null,
       piece: null,
-      pieceId: null
+      pieceId: null,
+      possibleMove: false,
     },
     {
       x: 8,
@@ -385,7 +432,8 @@ const initialState = {
       id: 48,
       owner: null,
       piece: null,
-      pieceId: null
+      pieceId: null,
+      possibleMove: false,
     },
     {
       x: 1,
@@ -393,7 +441,8 @@ const initialState = {
       id: 49,
       owner: `white`,
       piece: `pawn`,
-      pieceId: 17
+      pieceId: 17,
+      possibleMove: false,
     },
     {
       x: 2,
@@ -401,7 +450,8 @@ const initialState = {
       id: 50,
       owner: `white`,
       piece: `pawn`,
-      pieceId: 18
+      pieceId: 18,
+      possibleMove: false,
     },
     {
       x: 3,
@@ -409,7 +459,8 @@ const initialState = {
       id: 51,
       owner: `white`,
       piece: `pawn`,
-      pieceId: 19
+      pieceId: 19,
+      possibleMove: false,
     },
     {
       x: 4,
@@ -417,7 +468,8 @@ const initialState = {
       id: 52,
       owner: `white`,
       piece: `pawn`,
-      pieceId: 20
+      pieceId: 20,
+      possibleMove: false,
     },
     {
       x: 5,
@@ -425,7 +477,8 @@ const initialState = {
       id: 53,
       owner: `white`,
       piece: `pawn`,
-      pieceId: 21
+      pieceId: 21,
+      possibleMove: false,
     },
     {
       x: 6,
@@ -433,7 +486,8 @@ const initialState = {
       id: 54,
       owner: `white`,
       piece: `pawn`,
-      pieceId: 22
+      pieceId: 22,
+      possibleMove: false,
     },
     {
       x: 7,
@@ -441,7 +495,8 @@ const initialState = {
       id: 55,
       owner: `white`,
       piece: `pawn`,
-      pieceId: 23
+      pieceId: 23,
+      possibleMove: false,
     },
     {
       x: 8,
@@ -449,7 +504,8 @@ const initialState = {
       id: 56,
       owner: `white`,
       piece: `pawn`,
-      pieceId: 24
+      pieceId: 24,
+      possibleMove: false,
     },
     {
       x: 1,
@@ -457,7 +513,8 @@ const initialState = {
       id: 57,
       owner: `white`,
       piece: `rook`,
-      pieceId: 25
+      pieceId: 25,
+      possibleMove: false,
     },
     {
       x: 2,
@@ -465,7 +522,8 @@ const initialState = {
       id: 58,
       owner: `white`,
       piece: `knight`,
-      pieceId: 26
+      pieceId: 26,
+      possibleMove: false,
     },
     {
       x: 3,
@@ -473,7 +531,8 @@ const initialState = {
       id: 59,
       owner: `white`,
       piece: `bishop`,
-      pieceId: 27
+      pieceId: 27,
+      possibleMove: false,
     },
     {
       x: 4,
@@ -481,7 +540,8 @@ const initialState = {
       id: 60,
       owner: `white`,
       piece: `queen`,
-      pieceId: 28
+      pieceId: 28,
+      possibleMove: false,
     },
     {
       x: 5,
@@ -489,7 +549,8 @@ const initialState = {
       id: 61,
       owner: `white`,
       piece: `king`,
-      pieceId: 29
+      pieceId: 29,
+      possibleMove: false,
     },
     {
       x: 6,
@@ -497,7 +558,8 @@ const initialState = {
       id: 62,
       owner: `white`,
       piece: `bishop`,
-      pieceId: 30
+      pieceId: 30,
+      possibleMove: false,
     },
     {
       x: 7,
@@ -505,7 +567,8 @@ const initialState = {
       id: 63,
       owner: `white`,
       piece: `knight`,
-      pieceId: 31
+      pieceId: 31,
+      possibleMove: false,
     },
     {
       x: 8,
@@ -513,15 +576,43 @@ const initialState = {
       id: 64,
       owner: `white`,
       piece: `rook`,
-      pieceId: 32
+      pieceId: 32,
+      possibleMove: false,
     },
   ],
+  readyToMove: null,
 };
+
+const getStateBeforeMove = (state, data) => {
+  const newState = JSON.parse(JSON.stringify(state));
+  newState.boardState.forEach((cell) => {
+    cell.possibleMove = false;
+  })
+  data.possibleMoves.forEach((move) => {
+    
+    newState.boardState[move.id - 1].possibleMove = true;
+  });
+  newState.readyToMove = {piece: data.piece, owner: data.owner, id: data.id};
+  return newState;  
+}
+
+
+const getStateAfterMove = (state, data) => {
+  const newState = JSON.parse(JSON.stringify(state));
+  newState.boardState[data.id - 1].owner = data.readyToMove.owner;
+  newState.boardState[data.id - 1].piece = data.readyToMove.piece;
+  newState.boardState[data.readyToMove.id - 1].piece = null;
+  newState.boardState[data.readyToMove.id - 1].owner = null;
+  newState.readyToMove = null;
+  return newState;  
+}
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case ActionType.MOVE:
-      return state;
+    case ActionType.START_MOVE:
+      return getStateBeforeMove(state, action.payload);
+    case ActionType.FINISH_MOVE:
+      return getStateAfterMove(state, action.payload);
     default:
       return state;
   }
