@@ -17,7 +17,13 @@ const Field = (props) => {
   };
 
   const getBorderColor = () => {
-    return possibleMove ? `3px solid #58FC49` : readyToMove ? `3px solid #FFB01E` : `none`;
+    if (possibleMove) {
+      return `3px solid #58FC49`;
+    }
+    if (readyToMove) {
+      return `3px solid #FFB01E`;
+    }
+    return `none`;
   }
 
   return (

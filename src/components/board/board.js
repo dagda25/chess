@@ -62,6 +62,9 @@ const Board = (props) => {
           let field = boardState.find((el) => {
             return el.x === i && el.y === y;
           });
+          if (!field) {
+            break;
+          }
 
           if (field.owner === owner) {
             break;
@@ -74,10 +77,10 @@ const Board = (props) => {
         }
 
         for (let i = y - 1; i > 0; i--) {
-          let field = null;
-          field = boardState.find((el) => {
+          let field = boardState.find((el) => {
             return el.y === i && el.x === x;
           });
+
           if (field) {
             if (field.owner === owner) {
               break;
@@ -92,7 +95,7 @@ const Board = (props) => {
 
         }
 
-        for (let i = y + 1; y <= 8; i++) {
+        for (let i = y + 1; i <= 8; i++) {
           let field = boardState.find((el) => {
             return el.y === i && el.x === x;
           });
@@ -135,6 +138,9 @@ const Board = (props) => {
           let field = boardState.find((el) => {
             return el.x === i && el.y === j;
           });
+          if (!field) {
+            break;
+          }
 
           if (field.owner === owner) {
             break;
@@ -150,6 +156,9 @@ const Board = (props) => {
           let field = boardState.find((el) => {
             return el.x === i && el.y === j;
           });
+          if (!field) {
+            break;
+          }
 
           if (field.owner === owner) {
             break;
@@ -165,6 +174,9 @@ const Board = (props) => {
           let field = boardState.find((el) => {
             return el.x === i && el.y === j;
           });
+          if (!field) {
+            break;
+          }
 
           if (field) {
             if (field.owner === owner) {
@@ -184,6 +196,9 @@ const Board = (props) => {
           let field = boardState.find((el) => {
             return el.x === i && el.y === j;
           });
+          if (!field) {
+            break;
+          }
 
           if (field) {
             if (field.owner === owner) {
@@ -222,6 +237,9 @@ const Board = (props) => {
           let field = boardState.find((el) => {
             return el.x === i && el.y === y;
           });
+          if (!field) {
+            break;
+          }
 
           if (field) {
             if (field.owner === owner) {
@@ -241,6 +259,9 @@ const Board = (props) => {
           let field = boardState.find((el) => {
             return el.x === i && el.y === y;
           });
+          if (!field) {
+            break;
+          }
 
           if (field.owner === owner) {
             break;
@@ -256,6 +277,9 @@ const Board = (props) => {
           let field = boardState.find((el) => {
             return el.y === i && el.x === x;
           });
+          if (!field) {
+            break;
+          }
 
           if (field) {
             if (field.owner === owner) {
@@ -271,10 +295,13 @@ const Board = (props) => {
 
         }
 
-        for (let i = y + 1; y <= 8; i++) {
+        for (let i = y + 1; i <= 8; i++) {
           let field = boardState.find((el) => {
             return el.y === i && el.x === x;
           });
+          if (!field) {
+            break;
+          }
 
           if (field.owner === owner) {
             break;
@@ -290,6 +317,9 @@ const Board = (props) => {
           let field = boardState.find((el) => {
             return el.x === i && el.y === j;
           });
+          if (!field) {
+            break;
+          }
 
           if (field.owner === owner) {
             break;
@@ -304,6 +334,9 @@ const Board = (props) => {
           let field = boardState.find((el) => {
             return el.x === i && el.y === j;
           });
+          if (!field) {
+            break;
+          }
 
           if (field.owner === owner) {
             break;
@@ -318,6 +351,9 @@ const Board = (props) => {
           let field = boardState.find((el) => {
             return el.x === i && el.y === j;
           });
+          if (!field) {
+            break;
+          }
 
           if (field) {
             if (field.owner === owner) {
@@ -336,6 +372,9 @@ const Board = (props) => {
           let field = boardState.find((el) => {
             return el.x === i && el.y === j;
           });
+          if (!field) {
+            break;
+          }
 
           if (field) {
             if (field.owner === owner) {

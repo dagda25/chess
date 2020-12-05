@@ -250,8 +250,8 @@ const initialState = {
       x: 4,
       y: 4,
       id: 28,
-      owner: `white`,
-      piece: `queen`,
+      owner: null,
+      piece: null,
       pieceId: null,
       possibleMove: false,
     },
@@ -604,7 +604,10 @@ const getStateAfterMove = (state, data) => {
   newState.boardState[data.readyToMove.id - 1].piece = null;
   newState.boardState[data.readyToMove.id - 1].owner = null;
   newState.readyToMove = null;
-  return newState;  
+  newState.boardState.forEach((field) => {  
+    field.possibleMove = false;
+  });
+  return newState;
 }
 
 const reducer = (state = initialState, action) => {
