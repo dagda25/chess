@@ -444,15 +444,16 @@ const Board = (props) => {
             if (!field || !field.owner) {
               possibleMoves.push(field);
             }
-            fields = boardState.filter((el) => {
-              return (el.x === x - 1 && el.y === y - 1) || (el.x === x + 1 && el.y === y - 1);
-            });
-            fields.forEach((el) => {
-              if (el.owner === `black`) {
-                possibleMoves.push(el);
-              }
-            });
+
           }
+          fields = boardState.filter((el) => {
+            return (el.x === x - 1 && el.y === y - 1) || (el.x === x + 1 && el.y === y - 1);
+          });
+          fields.forEach((el) => {
+            if (el.owner === `black`) {
+              possibleMoves.push(el);
+            }
+          });
 
           break;
         }
