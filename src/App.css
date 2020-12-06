@@ -50,6 +50,9 @@
 }
 
 .field {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 100px;
   height: 100px;
   max-width: 12.5%;
@@ -66,8 +69,18 @@
 }
 
 .piece {
-  width: 100px;
-  height: 100px;
+  width: 94px;
+  height: 94px;
+}
+
+.move-note,
+.game-status {
+  max-width: 200px;
+  margin: 0 auto;
+  font-size: 20px;
+  padding: 10px 20px;
+  border: 2px solid black;
+  border-radius: 4px;
 }
 
 @media screen and (max-width: 800px) {

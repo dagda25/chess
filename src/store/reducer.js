@@ -1,4 +1,5 @@
 import {ActionType} from "./action";
+import {checkPossibleMoves} from "../components/board/board";
 
 const initialState = {
   boardState: [
@@ -581,34 +582,53 @@ const initialState = {
     },
   ],
   readyToMove: null,
+  nextTurn: `white`,
+  gameStatus: null,
 };
 
 const getStateBeforeMove = (state, data) => {
   const newState = JSON.parse(JSON.stringify(state));
   newState.boardState.forEach((cell) => {
     cell.possibleMove = false;
-  })
+  });
   data.possibleMoves.forEach((move) => {
-    
     newState.boardState[move.id - 1].possibleMove = true;
   });
   newState.readyToMove = {piece: data.piece, owner: data.owner, id: data.id};
-  return newState;  
-}
-
+  return newState;
+};
 
 const getStateAfterMove = (state, data) => {
   const newState = JSON.parse(JSON.stringify(state));
+  const prevTurn = newState.nextTurn;
   newState.boardState[data.id - 1].owner = data.readyToMove.owner;
   newState.boardState[data.id - 1].piece = data.readyToMove.piece;
   newState.boardState[data.readyToMove.id - 1].piece = null;
   newState.boardState[data.readyToMove.id - 1].owner = null;
   newState.readyToMove = null;
-  newState.boardState.forEach((field) => {  
+  newState.boardState.forEach((field) => {
     field.possibleMove = false;
   });
+  console.log(`ШАХ`, prevTurn, isCheck(newState.boardState, prevTurn))
+  newState.nextTurn = prevTurn === `white` ? `black` : `white`;
   return newState;
-}
+};
+
+const isCheck = (state, color) => {
+  let check = false;
+  state.forEach((el) => {
+    if (el.owner === color) {
+      const possibleMoves = checkPossibleMoves(state, el.piece, el.owner, el.x, el.y);
+      possibleMoves.forEach((el) => {
+        if (el.piece === `king`) {
+          check = true;
+        }
+      })
+
+    }
+  });
+  return check;
+};
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
