@@ -3,10 +3,27 @@ import PropTypes from "prop-types";
 import {connect} from "react-redux";
 import Field from "../field/field";
 import store from "../../store/store";
-import {ActionCreator} from "../../store/action"; 
+import {ActionCreator} from "../../store/action";
+import {computeBestMove} from "../../services/compute-best-move";
 
 const Board = (props) => {
-  const {boardState, readyToMove, startMove, finishMove, nextTurn} = props;
+  const {boardState, readyToMove, startMove, finishMove, nextTurn, AIMove, gameType} = props;
+
+  const computerTurn = (color) => {
+    /*for (let i = 0; i < boardState.length; i++) {
+      if (boardState[i].owner !== color) {
+        continue;
+      }
+      let moves = checkPossibleMoves(boardState, boardState[i].piece, boardState[i].owner, boardState[i].x, boardState[i].y);
+      if (!moves.length) {
+        continue;
+      }
+      AIMove({owner: color, piece: boardState[i].piece, firstId: [boardState[i].id], secondId: [moves[0].id]});
+      break;
+    }
+    */
+    AIMove(computeBestMove(boardState, nextTurn, checkPossibleMoves));
+  }
 
   const handlePieceClick = (evt) => {
     if (!evt.target.dataset.piece) {
@@ -27,12 +44,25 @@ const Board = (props) => {
 
   };
 
-  const handleFieldClick = (evt) => {
+  const handleFieldClick = async (evt) => {
 
     const {id} = evt.target.dataset;
   	if (!readyToMove) return false;
   	if (boardState[id - 1].possibleMove) {
-      finishMove({readyToMove, id});
+      
+        let prom = new Promise((resolve) => {
+        finishMove({readyToMove, id});
+
+        resolve()
+      });
+      prom.then(() => {
+        if (gameType !== `multi`) {
+          document.querySelector(".btn-hidden").click();        
+        }
+
+      })
+        
+
   	} else {
       return false;
   	}
@@ -45,7 +75,6 @@ const Board = (props) => {
     boardState.forEach((el) => {
       if (el.owner && el.owner !== color) {
         const possibleMoves = checkPossibleMoves(el.piece, el.owner, el.x, el.y);
-        console.log(possibleMoves)
         possibleMoves.forEach((el) => {
           if (el.piece === `king`) {
             check = true;
@@ -65,6 +94,7 @@ const Board = (props) => {
   }
 
   return (
+  <><button className="btn-hidden" onClick={() => computerTurn(nextTurn)}>t</button>
     <div className="board">
       {boardState.map((field) => {
         return (
@@ -72,6 +102,7 @@ const Board = (props) => {
         );
       })}
     </div>
+    </>
   );
 };
 
@@ -437,12 +468,13 @@ export const checkPossibleMoves = (boardState, piece, owner, x, y) => {
           let field = boardState.find((el) => {
             return el.x === x && el.y === y + 1;
           });
-          if (!field.owner) {
+          if (field && !field.owner) {
             possibleMoves.push(field);
             let secondField = boardState.find((el) => {
               return el.x === x && el.y === y + 2;
             });
-            if (!field.owner) {
+            if (secondField && !secondField.owner) {
+
               possibleMoves.push(secondField);
             }
           }
@@ -450,7 +482,7 @@ export const checkPossibleMoves = (boardState, piece, owner, x, y) => {
           let field = boardState.find((el) => {
             return el.x === x && el.y === y + 1;
           });
-          if (!field || !field.owner) {
+          if (field && !field.owner) {
             possibleMoves.push(field);
           }
         }
@@ -469,12 +501,12 @@ export const checkPossibleMoves = (boardState, piece, owner, x, y) => {
           let field = boardState.find((el) => {
             return el.x === x && el.y === y - 1;
           });
-          if (!field.owner) {
+          if (field && !field.owner) {
             possibleMoves.push(field);
             let secondField = boardState.find((el) => {
               return el.x === x && el.y === y - 2;
             });
-            if (!field.owner) {
+            if (secondField && !secondField.owner) {
               possibleMoves.push(secondField);
             }
           }
@@ -482,7 +514,7 @@ export const checkPossibleMoves = (boardState, piece, owner, x, y) => {
           let field = boardState.find((el) => {
             return el.x === x && el.y === y - 1;
           });
-          if (!field || !field.owner) {
+          if (field && !field.owner) { 
             possibleMoves.push(field);
           }
 
@@ -507,6 +539,7 @@ const mapStateToProps = (data) => ({
   boardState: data.boardState,
   readyToMove: data.readyToMove,
   nextTurn: data.nextTurn,
+  gameType: data.gameType,
 });
 
 
@@ -516,6 +549,9 @@ const mapDispatchToProps = (dispatch) => ({
   },
   finishMove(data) {
     dispatch(ActionCreator.finishMove(data));
+  },
+  AIMove(data) {
+    dispatch(ActionCreator.AIMove(data));
   },
 });
 

@@ -2,16 +2,6 @@
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
 
 .App-header {
   background-color: #282c34;
@@ -81,6 +71,31 @@
   padding: 10px 20px;
   border: 2px solid black;
   border-radius: 4px;
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.game-menu input[name="gameMenu"] {
+  display: none;
+}
+
+.game-menu input[name="gameMenu"] + label {
+  padding: 5px 10px;
+  border: 2px solid black;
+  border-radius: 4px;
+}
+
+.game-menu input[name="gameMenu"]:checked + label {
+  border: 3px solid black;
+  background-color: #C7FCB5;
+}
+
+.btn-hidden {
+  display: none;
 }
 
 @media screen and (max-width: 800px) {

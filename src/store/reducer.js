@@ -1,5 +1,6 @@
 import {ActionType} from "./action";
 import {checkPossibleMoves} from "../components/board/board";
+import {fieldNames} from "../const";
 
 const initialState = {
   boardState: [
@@ -584,6 +585,8 @@ const initialState = {
   readyToMove: null,
   nextTurn: `white`,
   gameStatus: null,
+  gameType: `singleWhite`,
+  log: [],
 };
 
 const getStateBeforeMove = (state, data) => {
@@ -603,14 +606,73 @@ const getStateAfterMove = (state, data) => {
   const prevTurn = newState.nextTurn;
   newState.boardState[data.id - 1].owner = data.readyToMove.owner;
   newState.boardState[data.id - 1].piece = data.readyToMove.piece;
+  if (prevTurn === `white` && data.id <= 8 && data.readyToMove.piece === `pawn`) {
+    newState.boardState[data.id - 1].piece = `queen`;
+  }
+  if (prevTurn === `black` && data.id >= 57 && data.readyToMove.piece === `pawn`) {
+    newState.boardState[data.id - 1].piece = `queen`;
+  }
   newState.boardState[data.readyToMove.id - 1].piece = null;
   newState.boardState[data.readyToMove.id - 1].owner = null;
   newState.readyToMove = null;
   newState.boardState.forEach((field) => {
     field.possibleMove = false;
   });
+
   console.log(`ШАХ`, prevTurn, isCheck(newState.boardState, prevTurn))
   newState.nextTurn = prevTurn === `white` ? `black` : `white`;
+  newState.gameStatus = isCheck(newState.boardState, prevTurn) ? newState.nextTurn : null;
+
+  if (isCheckmate(newState.boardState, newState.nextTurn)) {
+    newState.gameStatus = `${newState.nextTurn}-checkmate`;
+  }
+
+  newState.log.push(`${prevTurn} ${data.readyToMove.piece} from ${fieldNames[data.readyToMove.id]} to ${fieldNames[data.id]}`);
+  return newState;
+};
+
+const getStateOnStart = (state, data) => {
+  const newState = JSON.parse(JSON.stringify(state));
+  newState.gameType = data;
+  if (data === `singleBlack`) {
+    newState.boardState[52].owner = null;
+    newState.boardState[52].piece = null;
+    newState.boardState[36].owner = `white`;
+    newState.boardState[36].piece = `pawn`;
+    newState.nextTurn = `black`;
+  }
+  return newState;
+};
+
+const getStateAfterAIMove = (state, data) => {
+  const newState = JSON.parse(JSON.stringify(state));
+  const prevTurn = newState.nextTurn;
+
+  newState.boardState[data.firstId - 1].piece = null;
+  newState.boardState[data.firstId - 1].owner = null;
+  newState.boardState[data.secondId - 1].owner = data.owner;
+  newState.boardState[data.secondId - 1].piece = data.piece;
+  if (prevTurn === `white` && data.secondId <= 8 && data.piece === `pawn`) {
+    newState.boardState[data.secondId - 1].piece = `queen`;
+  }
+  if (prevTurn === `black` && data.secondId >= 57 && data.piece === `pawn`) {
+    newState.boardState[data.secondId - 1].piece = `queen`;
+  }
+
+  newState.readyToMove = null;
+  newState.boardState.forEach((field) => {
+    field.possibleMove = false;
+  });
+
+  console.log(`ШАХ`, prevTurn, isCheck(newState.boardState, prevTurn))
+  newState.nextTurn = prevTurn === `white` ? `black` : `white`;
+  newState.gameStatus = isCheck(newState.boardState, prevTurn) ? newState.nextTurn : null;
+
+  if (isCheckmate(newState.boardState, newState.nextTurn)) {
+    newState.gameStatus = `${newState.nextTurn}-checkmate`;
+  }
+
+  newState.log.push(`${prevTurn} ${data.piece} from ${fieldNames[data.firstId]} to ${fieldNames[data.secondId]}`);
   return newState;
 };
 
@@ -619,8 +681,8 @@ const isCheck = (state, color) => {
   state.forEach((el) => {
     if (el.owner === color) {
       const possibleMoves = checkPossibleMoves(state, el.piece, el.owner, el.x, el.y);
-      possibleMoves.forEach((el) => {
-        if (el.piece === `king`) {
+      possibleMoves.forEach((m) => {
+        if (m.piece === `king`) {
           check = true;
         }
       })
@@ -630,12 +692,27 @@ const isCheck = (state, color) => {
   return check;
 };
 
+const isCheckmate = (state, color) => {
+  let checkmate = true;
+  state.forEach((el) => {
+    if (el.owner === color && el.piece === `king`) {
+
+      checkmate = false;
+    }
+  });
+  return checkmate;
+};
+
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case ActionType.START_MOVE:
       return getStateBeforeMove(state, action.payload);
     case ActionType.FINISH_MOVE:
       return getStateAfterMove(state, action.payload);
+    case ActionType.AI_MOVE:
+      return getStateAfterAIMove(state, action.payload);
+    case ActionType.START_GAME:
+      return getStateOnStart(initialState, action.payload);
     default:
       return state;
   }
