@@ -75,12 +75,20 @@
 
 .header {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   flex-wrap: wrap;
+}
+
+.game-menu, .game-status, .move-note {
+  margin-top: 20px;
 }
 
 .game-menu input[name="gameMenu"] {
   display: none;
+}
+
+.game-menu label {
+  margin-right: 20px;
 }
 
 .game-menu input[name="gameMenu"] + label {
@@ -112,5 +120,18 @@
   .piece {
     max-width: 12.5vw;
     max-height: 12.5vw;
-  }  
+  } 
+  
+  .game-menu {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;    
+  }
+  .game-menu label {
+    margin-bottom: 20px;
+  }
+
+  .game-start {
+    padding: 10px 20px;
+  }
 }
