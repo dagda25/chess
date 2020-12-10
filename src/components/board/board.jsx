@@ -10,18 +10,6 @@ const Board = (props) => {
   const {boardState, readyToMove, startMove, finishMove, nextTurn, AIMove, gameType} = props;
 
   const computerTurn = (color) => {
-    /*for (let i = 0; i < boardState.length; i++) {
-      if (boardState[i].owner !== color) {
-        continue;
-      }
-      let moves = checkPossibleMoves(boardState, boardState[i].piece, boardState[i].owner, boardState[i].x, boardState[i].y);
-      if (!moves.length) {
-        continue;
-      }
-      AIMove({owner: color, piece: boardState[i].piece, firstId: [boardState[i].id], secondId: [moves[0].id]});
-      break;
-    }
-    */
     AIMove(computeBestMove(boardState, nextTurn, checkPossibleMoves));
   }
 
@@ -40,7 +28,7 @@ const Board = (props) => {
       return;
     }
 
-    startMove({possibleMoves: checkPossibleMoves(boardState, piece, owner, x, y), piece, owner, id});
+    startMove({possibleMoves: checkPossibleMoves(boardState, piece, owner, x, y, id), piece, owner, id});
 
   };
 
@@ -74,7 +62,7 @@ const Board = (props) => {
     let check = false;
     boardState.forEach((el) => {
       if (el.owner && el.owner !== color) {
-        const possibleMoves = checkPossibleMoves(el.piece, el.owner, el.x, el.y);
+        const possibleMoves = checkPossibleMoves(el.piece, el.owner, el.x, el.y, el.id);
         possibleMoves.forEach((el) => {
           if (el.piece === `king`) {
             check = true;
@@ -106,7 +94,7 @@ const Board = (props) => {
   );
 };
 
-export const checkPossibleMoves = (boardState, piece, owner, x, y) => {
+export const checkPossibleMoves = (boardState, piece, owner, x, y, id) => {
   const possibleMoves = [];
   let fields;
   switch (piece) {
@@ -302,6 +290,59 @@ export const checkPossibleMoves = (boardState, piece, owner, x, y) => {
         }
 
       });
+
+      if (boardState[id - 1].moved === false) {
+        if (owner === `black`
+           && boardState[0].owner === `black`
+           && boardState[0].piece === `rook`
+           && boardState[0].moved === false
+           && boardState[1].owner === null
+           && boardState[2].owner === null
+           && boardState[3].owner === null) {
+             possibleMoves.push(boardState.find((el) => {
+                return el.id === 3;
+             }))
+           }
+
+         if (owner === `black`
+            && boardState[7].owner === `black`
+            && boardState[7].piece === `rook`
+            && boardState[7].moved === false
+            && boardState[6].owner === null
+            && boardState[5].owner === null) {
+              possibleMoves.push(boardState.find((el) => {
+                 return el.id === 7;
+              }))            
+            }
+
+         if (owner === `white`
+            && boardState[63].owner === `white`
+            && boardState[63].piece === `rook`
+            && boardState[63].moved === false
+            && boardState[62].owner === null
+            && boardState[61].owner === null) {
+              possibleMoves.push(boardState.find((el) => {
+                 return el.id === 63;
+              }))
+            
+            }
+
+         if (owner === `white`
+            && boardState[56].owner === `white`
+            && boardState[56].piece === `rook`
+            && boardState[56].moved === false
+            && boardState[57].owner === null
+            && boardState[58].owner === null
+            && boardState[59].owner === null) {
+              possibleMoves.push(boardState.find((el) => {
+                 return el.id === 59;
+              }))
+            
+            }
+
+
+      }
+
       break;
 
     case `queen`:

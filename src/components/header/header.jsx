@@ -40,7 +40,7 @@ const Header = (props) => {
       	<button className="game-start" type="button" onClick={onGameStart}>Начать игру</button>
       </form>    
       <div className="game-status">{gameStatuses.[gameStatus]}</div>
-      <div className="move-note">{nextTurn === `white` ? `Ход белых` : `Ход чёрных`}</div>
+      <div className="move-note">{nextTurn === `white` && `Ход белых`}{nextTurn === `black` && `Ход чёрных`}{nextTurn === null && `Игра окончена`}</div>
     </div>
   );
 };

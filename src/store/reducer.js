@@ -12,6 +12,7 @@ const initialState = {
       piece: `rook`,
       pieceId: 1,
       possibleMove: false,
+      moved: false,
     },
     {
       x: 2,
@@ -48,6 +49,7 @@ const initialState = {
       piece: `king`,
       pieceId: 5,
       possibleMove: false,
+      moved: false,
     },
     {
       x: 6,
@@ -75,6 +77,7 @@ const initialState = {
       piece: `rook`,
       pieceId: 8,
       possibleMove: false,
+      moved: false,
     },
     {
       x: 1,
@@ -517,6 +520,7 @@ const initialState = {
       piece: `rook`,
       pieceId: 25,
       possibleMove: false,
+      moved: false,
     },
     {
       x: 2,
@@ -553,6 +557,7 @@ const initialState = {
       piece: `king`,
       pieceId: 29,
       possibleMove: false,
+      moved: false,
     },
     {
       x: 6,
@@ -580,6 +585,7 @@ const initialState = {
       piece: `rook`,
       pieceId: 32,
       possibleMove: false,
+      moved: false,
     },
   ],
   readyToMove: null,
@@ -614,6 +620,46 @@ const getStateAfterMove = (state, data) => {
   }
   newState.boardState[data.readyToMove.id - 1].piece = null;
   newState.boardState[data.readyToMove.id - 1].owner = null;
+
+  if (data.readyToMove.piece === `king` && +data.id === 3 && +data.readyToMove.id === 5) {
+    newState.boardState[0].owner = null;
+    newState.boardState[0].piece = null;
+    newState.boardState[0].moved = true; 
+    newState.boardState[3].owner = `black`;
+    newState.boardState[3].piece = `rook`;    
+  }
+
+  console.log(data.readyToMove.piece, data.id, data.readyToMove.id)
+
+  if (data.readyToMove.piece === `king` && +data.id === 7 && +data.readyToMove.id === 5) {
+    newState.boardState[7].owner = null;
+    newState.boardState[7].piece = null;
+    newState.boardState[7].moved = true; 
+    newState.boardState[5].owner = `black`;
+    newState.boardState[5].piece = `rook`;    
+  }
+
+  if (data.readyToMove.piece === `king` && +data.id === 59 && +data.readyToMove.id === 61) {
+    newState.boardState[56].owner = null;
+    newState.boardState[56].piece = null;
+    newState.boardState[56].moved = true; 
+    newState.boardState[59].owner = `white`;
+    newState.boardState[59].piece = `rook`;    
+  }
+
+  if (data.readyToMove.piece === `king` && +data.id === 63 && +data.readyToMove.id === 61) {
+    newState.boardState[63].owner = null;
+    newState.boardState[63].piece = null;
+    newState.boardState[63].moved = true; 
+    newState.boardState[61].owner = `white`;
+    newState.boardState[61].piece = `rook`;    
+  }
+
+  if (data.readyToMove.piece === `king` || data.readyToMove.piece === `rook`) {
+    newState.boardState[data.readyToMove.id - 1].moved = true;
+  }
+
+
   newState.readyToMove = null;
   newState.boardState.forEach((field) => {
     field.possibleMove = false;
@@ -625,6 +671,7 @@ const getStateAfterMove = (state, data) => {
 
   if (isCheckmate(newState.boardState, newState.nextTurn)) {
     newState.gameStatus = `${newState.nextTurn}-checkmate`;
+    newState.nextTurn = null;
   }
 
   newState.log.push(`${prevTurn} ${data.readyToMove.piece} from ${fieldNames[data.readyToMove.id]} to ${fieldNames[data.id]}`);
@@ -664,12 +711,17 @@ const getStateAfterAIMove = (state, data) => {
     field.possibleMove = false;
   });
 
+  if (data.piece === `king` || data.piece === `rook`) {
+    newState.boardState[data.firstId - 1].moved = true;
+  }
+
   console.log(`ШАХ`, prevTurn, isCheck(newState.boardState, prevTurn))
   newState.nextTurn = prevTurn === `white` ? `black` : `white`;
   newState.gameStatus = isCheck(newState.boardState, prevTurn) ? newState.nextTurn : null;
 
   if (isCheckmate(newState.boardState, newState.nextTurn)) {
     newState.gameStatus = `${newState.nextTurn}-checkmate`;
+    newState.nextTurn = null;
   }
 
   newState.log.push(`${prevTurn} ${data.piece} from ${fieldNames[data.firstId]} to ${fieldNames[data.secondId]}`);
@@ -680,7 +732,7 @@ const isCheck = (state, color) => {
   let check = false;
   state.forEach((el) => {
     if (el.owner === color) {
-      const possibleMoves = checkPossibleMoves(state, el.piece, el.owner, el.x, el.y);
+      const possibleMoves = checkPossibleMoves(state, el.piece, el.owner, el.x, el.y, el.id);
       possibleMoves.forEach((m) => {
         if (m.piece === `king`) {
           check = true;
