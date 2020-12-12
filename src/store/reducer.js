@@ -629,8 +629,6 @@ const getStateAfterMove = (state, data) => {
     newState.boardState[3].piece = `rook`;    
   }
 
-  console.log(data.readyToMove.piece, data.id, data.readyToMove.id)
-
   if (data.readyToMove.piece === `king` && +data.id === 7 && +data.readyToMove.id === 5) {
     newState.boardState[7].owner = null;
     newState.boardState[7].piece = null;
