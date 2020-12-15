@@ -36,7 +36,7 @@ const Board = (props) => {
 
     const {id} = evt.target.dataset;
   	if (!readyToMove) return false;
-  	if (boardState[id - 1].possibleMove) {
+  	if (boardState[id - 1].possibleMove && !isCheck(getNewState(boardState, readyToMove.id, id), readyToMove.owner)) {
       
         let prom = new Promise((resolve) => {
         finishMove({readyToMove, id});
@@ -57,12 +57,28 @@ const Board = (props) => {
 
   }
 
+  const getNewState = (state, idFrom, idTo) => {
+    const newState = JSON.parse(JSON.stringify(state));
 
-  const isCheck = (color) => {
+    newState[idTo - 1].piece = newState[idFrom - 1].piece;
+    newState[idTo - 1].owner = newState[idFrom - 1].owner;
+    newState[idFrom - 1].piece = null;
+    newState[idFrom - 1].owner = null;
+
+    return newState;
+  };
+
+  const invertColor = (color) => {
+    return color === `white` ? `black` : `white`;
+  };
+
+
+  const isCheck = (state, color) => {
+
     let check = false;
-    boardState.forEach((el) => {
+    state.forEach((el) => {
       if (el.owner && el.owner !== color) {
-        const possibleMoves = checkPossibleMoves(el.piece, el.owner, el.x, el.y, el.id);
+        const possibleMoves = checkPossibleMoves(state, el.piece, el.owner, el.x, el.y, el.id);
         possibleMoves.forEach((el) => {
           if (el.piece === `king`) {
             check = true;

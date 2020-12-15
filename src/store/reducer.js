@@ -744,13 +744,43 @@ const isCheck = (state, color) => {
 
 const isCheckmate = (state, color) => {
   let checkmate = true;
+
+  for (let i = 0; i < state.length; i++) {
+    if (state[i].owner !== color) {
+      continue;
+    }
+    let moves = checkPossibleMoves(state, state[i].piece, state[i].owner, state[i].x, state[i].y, state[i].id);
+    moves.forEach((move) => {
+      const newState = getNewState(state, i + 1, move.id);
+      if (!isCheck(newState, invertColor(color))) {
+        checkmate = false;
+      }
+    });
+  };
+
+  /*let checkmate = true;
   state.forEach((el) => {
     if (el.owner === color && el.piece === `king`) {
 
       checkmate = false;
     }
-  });
+  });*/
   return checkmate;
+};
+
+const getNewState = (state, idFrom, idTo) => {
+  const newState = JSON.parse(JSON.stringify(state));
+
+  newState[idTo - 1].piece = newState[idFrom - 1].piece;
+  newState[idTo - 1].owner = newState[idFrom - 1].owner;
+  newState[idFrom - 1].piece = null;
+  newState[idFrom - 1].owner = null;
+
+  return newState;
+};
+
+const invertColor = (color) => {
+  return color === `white` ? `black` : `white`;
 };
 
 const reducer = (state = initialState, action) => {

@@ -130,9 +130,29 @@ export const computeBestMove = (state, color, checkPossibleMoves) => {
       const newState = getNewState(state, i + 1, move.id); 
 
       const danger = countDanger(newState, color);
-      console.log(profit, danger)
 
-      let result = profit - danger + currentDanger;
+      let minOppDanger = 100;
+      for (let j = 0; j < newState.length; j++) {
+        if (newState[j].owner !== invertColor(color)) {
+          continue;
+        }
+        let oppMoves = checkPossibleMoves(newState, newState[j].piece, newState[j].owner, newState[j].x, newState[j].y, newState[j].id);
+
+        if (!oppMoves.length) {
+          continue;
+        }
+
+        oppMoves.forEach((oppMove) => {
+          const stateAfterOppMove = getNewState(newState, j + 1, oppMove.id);
+          const oppDanger = countDanger(stateAfterOppMove, invertColor(color));
+          if (oppDanger < minOppDanger) {
+            minOppDanger = oppDanger;
+          }
+        });
+      }
+
+      let result = profit - danger + currentDanger + minOppDanger;
+
       let attackRating = countAttackRating(color, {"x": newState[i].x, "y": newState[i].y}, {"x": newState[move.id - 1].x, "y": newState[move.id - 1].y});
       let totalCoverDiff = countTotalCoverDiff(color, state, newState, i + 1, move.id);
 
@@ -145,6 +165,7 @@ export const computeBestMove = (state, color, checkPossibleMoves) => {
         maxAttackRating = attackRating;
         maxTotalCoverDiff = totalCoverDiff;
         bestMove = {owner: color, piece: state[i].piece, firstId: state[i].id, secondId: move.id};
+        console.log(`result`, result, profit, danger, currentDanger, minOppDanger, bestMove)
       }
 
       if (result === maxProfit && attackRating === maxAttackRating && totalCoverDiff > maxTotalCoverDiff && (profit >= danger || profit === 0)) {
