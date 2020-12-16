@@ -7,6 +7,23 @@ export const computeBestMove = (state, color, checkPossibleMoves) => {
     return color === `white` ? `black` : `white`;
   };
 
+  const isCheck = (state, color) => {
+    let check = false;
+    state.forEach((el) => {
+      if (el.owner && el.owner !== color) {
+        const possibleMoves = checkPossibleMoves(state, el.piece, el.owner, el.x, el.y, el.id);
+
+        possibleMoves.forEach((el) => {
+          if (el.piece === `king`) {
+            check = true;
+          }
+        })
+
+      }
+    });
+    return check;
+  };
+
   const countDanger = (state, color) => {
     let maxDanger = 0;
     const oppColor = invertColor(color);
@@ -74,7 +91,7 @@ export const computeBestMove = (state, color, checkPossibleMoves) => {
       }
     }
 
-    return yDiff * 10 + xDiff;
+    return yDiff * 2 + xDiff / 2;
   };
 
   const countCoverDiff = (color, state, newState, idFrom, idTo) => {
@@ -153,6 +170,10 @@ export const computeBestMove = (state, color, checkPossibleMoves) => {
 
       let result = profit - danger + currentDanger + minOppDanger;
 
+      if (isCheck(newState, invertColor(color))) {
+        result = result + 0.5;
+      }
+
       let attackRating = countAttackRating(color, {"x": newState[i].x, "y": newState[i].y}, {"x": newState[move.id - 1].x, "y": newState[move.id - 1].y});
       let totalCoverDiff = countTotalCoverDiff(color, state, newState, i + 1, move.id);
 
@@ -160,12 +181,11 @@ export const computeBestMove = (state, color, checkPossibleMoves) => {
         bestMove = {owner: color, piece: state[i].piece, firstId: state[i].id, secondId: move.id};
       }
 
-      if ((result > maxProfit || (result === maxProfit && attackRating > maxAttackRating)) && (profit >= danger || profit === 0)) {
+      if ((result > maxProfit || (result === maxProfit && attackRating + totalCoverDiff > maxAttackRating + maxTotalCoverDiff)) && (profit >= danger || profit === 0)) {
         maxProfit = result;
         maxAttackRating = attackRating;
         maxTotalCoverDiff = totalCoverDiff;
         bestMove = {owner: color, piece: state[i].piece, firstId: state[i].id, secondId: move.id};
-        console.log(`result`, result, profit, danger, currentDanger, minOppDanger, bestMove)
       }
 
       if (result === maxProfit && attackRating === maxAttackRating && totalCoverDiff > maxTotalCoverDiff && (profit >= danger || profit === 0)) {
@@ -176,7 +196,6 @@ export const computeBestMove = (state, color, checkPossibleMoves) => {
     });
 
   }
-  console.log(maxProfit, maxAttackRating, maxTotalCoverDiff)
   return bestMove;
 };
 

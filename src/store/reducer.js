@@ -663,7 +663,6 @@ const getStateAfterMove = (state, data) => {
     field.possibleMove = false;
   });
 
-  console.log(`ШАХ`, prevTurn, isCheck(newState.boardState, prevTurn))
   newState.nextTurn = prevTurn === `white` ? `black` : `white`;
   newState.gameStatus = isCheck(newState.boardState, prevTurn) ? newState.nextTurn : null;
 
@@ -713,7 +712,6 @@ const getStateAfterAIMove = (state, data) => {
     newState.boardState[data.firstId - 1].moved = true;
   }
 
-  console.log(`ШАХ`, prevTurn, isCheck(newState.boardState, prevTurn))
   newState.nextTurn = prevTurn === `white` ? `black` : `white`;
   newState.gameStatus = isCheck(newState.boardState, prevTurn) ? newState.nextTurn : null;
 
