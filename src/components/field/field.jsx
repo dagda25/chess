@@ -36,7 +36,7 @@ const Field = (props) => {
         data-y={y}
         data-id={id}>
         {piece ?
-          <img className="piece" src={getImageSrc()} onClick={handlePieceClick} data-piece={piece} data-owner={owner} data-id={id}/>
+          <img className="piece" src={getImageSrc()} onClick={handlePieceClick} onDragStart={(event) => event.preventDefault()} data-piece={piece} data-owner={owner} data-id={id}/>
           : null
         }
       </div>

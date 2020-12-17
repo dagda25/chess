@@ -10,16 +10,9 @@ const Header = (props) => {
   const {nextTurn, gameStatus, startGame, gameType} = props;
   const form = React.useRef(null);
 
-  const onGameStart = (evt) => {
-    evt.preventDefault();
-  	startGame(inputValue);
-  	console.log(gameType)
-  }
-
   const handleFieldChange = (evt) => {
-
     setInputValue(evt.target.value);
-
+    startGame(evt.target.value);
   };
 
   return (
@@ -36,11 +29,10 @@ const Header = (props) => {
       	<input type="radio" id="menuOption3"
       	 name="gameMenu" value="multi" onChange={handleFieldChange} checked={inputValue === `multi`}/>
       	<label htmlFor="menuOption3">Играть вдвоём</label>
-
-      	<button className="game-start" type="button" onClick={onGameStart}>Начать игру</button>
-      </form>    
-      <div className="game-status">{gameStatuses.[gameStatus]}</div>
-      <div className="move-note">{nextTurn === `white` && `Ход белых`}{nextTurn === `black` && `Ход чёрных`}{nextTurn === null && `Игра окончена`}</div>
+      </form>
+      <div className="header-info">    
+        <div className="game-status">{gameStatuses.[gameStatus] ? gameStatuses.[gameStatus] : nextTurn === `black` ? `Ход чёрных` : `Ход белых`}</div>
+      </div>
     </div>
   );
 };

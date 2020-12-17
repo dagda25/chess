@@ -161,7 +161,10 @@ export const computeBestMove = (state, color, checkPossibleMoves) => {
 
         oppMoves.forEach((oppMove) => {
           const stateAfterOppMove = getNewState(newState, j + 1, oppMove.id);
-          const oppDanger = countDanger(stateAfterOppMove, invertColor(color));
+          let oppDanger = countDanger(stateAfterOppMove, invertColor(color));
+          if (isCheck(stateAfterOppMove, color)) {
+            oppDanger = oppDanger - 0.5;
+          }
           if (oppDanger < minOppDanger) {
             minOppDanger = oppDanger;
           }

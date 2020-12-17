@@ -5,15 +5,17 @@ import Field from "../field/field";
 import store from "../../store/store";
 import {ActionCreator} from "../../store/action";
 import {computeBestMove} from "../../services/compute-best-move";
+import {gameStatuses} from "../../const";
 
 const Board = (props) => {
-  const {boardState, readyToMove, startMove, finishMove, nextTurn, AIMove, gameType} = props;
+  const {boardState, readyToMove, startMove, finishMove, nextTurn, AIMove, gameType, gameStatus} = props;
 
   const computerTurn = (color) => {
     AIMove(computeBestMove(boardState, nextTurn, checkPossibleMoves));
   }
 
   const handlePieceClick = (evt) => {
+    //evt.dragStart = false;
     if (!evt.target.dataset.piece) {
       return;
     }
@@ -37,7 +39,7 @@ const Board = (props) => {
     const {id} = evt.target.dataset;
   	if (!readyToMove) return false;
   	if (boardState[id - 1].possibleMove && !isCheck(getNewState(boardState, readyToMove.id, id), readyToMove.owner)) {
-      
+        
         let prom = new Promise((resolve) => {
         finishMove({readyToMove, id});
 
@@ -49,7 +51,6 @@ const Board = (props) => {
         }
 
       })
-        
 
   	} else {
       return false;
@@ -99,7 +100,7 @@ const Board = (props) => {
 
   return (
   <><button className="btn-hidden" onClick={() => computerTurn(nextTurn)}>t</button>
-    <div className="board">
+    <div className="board" style={{opacity: (gameStatus && gameStatus.includes(`checkmate`)) ? 0.4 : 1}}>
       {boardState.map((field) => {
         return (
           <Field key={field.id} fieldState={field} readyToMove={isReadyToMove(readyToMove, field.id)} handlePieceClick={handlePieceClick} handleFieldClick={handleFieldClick}/>
@@ -597,6 +598,7 @@ const mapStateToProps = (data) => ({
   readyToMove: data.readyToMove,
   nextTurn: data.nextTurn,
   gameType: data.gameType,
+  gameStatus: data.gameStatus,
 });
 
 
