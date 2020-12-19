@@ -560,33 +560,33 @@ const getStateAfterMove = (state, data) => {
   if (data.readyToMove.piece === `king` && +data.id === 3 && +data.readyToMove.id === 5) {
     newState.boardState[0].owner = null;
     newState.boardState[0].piece = null;
-    newState.boardState[0].moved = true; 
+    newState.boardState[0].moved = true;
     newState.boardState[3].owner = `black`;
-    newState.boardState[3].piece = `rook`;    
+    newState.boardState[3].piece = `rook`;
   }
 
   if (data.readyToMove.piece === `king` && +data.id === 7 && +data.readyToMove.id === 5) {
     newState.boardState[7].owner = null;
     newState.boardState[7].piece = null;
-    newState.boardState[7].moved = true; 
+    newState.boardState[7].moved = true;
     newState.boardState[5].owner = `black`;
-    newState.boardState[5].piece = `rook`;    
+    newState.boardState[5].piece = `rook`;
   }
 
   if (data.readyToMove.piece === `king` && +data.id === 59 && +data.readyToMove.id === 61) {
     newState.boardState[56].owner = null;
     newState.boardState[56].piece = null;
-    newState.boardState[56].moved = true; 
+    newState.boardState[56].moved = true;
     newState.boardState[59].owner = `white`;
-    newState.boardState[59].piece = `rook`;    
+    newState.boardState[59].piece = `rook`;
   }
 
   if (data.readyToMove.piece === `king` && +data.id === 63 && +data.readyToMove.id === 61) {
     newState.boardState[63].owner = null;
     newState.boardState[63].piece = null;
-    newState.boardState[63].moved = true; 
+    newState.boardState[63].moved = true;
     newState.boardState[61].owner = `white`;
-    newState.boardState[61].piece = `rook`;    
+    newState.boardState[61].piece = `rook`;
   }
 
   if (data.readyToMove.piece === `king` || data.readyToMove.piece === `rook`) {
@@ -669,7 +669,7 @@ const isCheck = (state, color) => {
         if (m.piece === `king`) {
           check = true;
         }
-      })
+      });
 
     }
   });
@@ -690,15 +690,8 @@ const isCheckmate = (state, color) => {
         checkmate = false;
       }
     });
-  };
+  }
 
-  /*let checkmate = true;
-  state.forEach((el) => {
-    if (el.owner === color && el.piece === `king`) {
-
-      checkmate = false;
-    }
-  });*/
   return checkmate;
 };
 

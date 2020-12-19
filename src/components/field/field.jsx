@@ -47,6 +47,11 @@ const Field = (props) => {
 
 Field.propTypes = {
   fieldState: PropTypes.object.isRequired,
+  handlePieceClick: PropTypes.func,
+  handleFieldClick: PropTypes.func,
+  readyToMove: PropTypes.bool,
+
+
 };
 
 export default Field;

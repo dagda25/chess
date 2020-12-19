@@ -17,7 +17,7 @@ export const computeBestMove = (state, color, checkPossibleMoves) => {
           if (el.piece === `king`) {
             check = true;
           }
-        })
+        });
 
       }
     });
@@ -109,7 +109,7 @@ export const computeBestMove = (state, color, checkPossibleMoves) => {
       }
       let moves = checkPossibleMoves(state, state[i].piece, state[i].owner, state[i].x, state[i].y, state[i].id);
 
-      totalCoverBefore += moves.length;     
+      totalCoverBefore += moves.length;
     }
     for (let i = 0; i < newState.length; i++) {
       if (newState[i].owner !== color) {
@@ -117,7 +117,7 @@ export const computeBestMove = (state, color, checkPossibleMoves) => {
       }
       let moves = checkPossibleMoves(newState, newState[i].piece, newState[i].owner, newState[i].x, newState[i].y, newState[i].id);
 
-      totalCoverAfter += moves.length;     
+      totalCoverAfter += moves.length;
     }
 
     return totalCoverAfter - totalCoverBefore;
@@ -144,7 +144,7 @@ export const computeBestMove = (state, color, checkPossibleMoves) => {
 
       let profit = move.owner ? pieceValue[move.piece] : 0;
 
-      const newState = getNewState(state, i + 1, move.id); 
+      const newState = getNewState(state, i + 1, move.id);
 
       const danger = countDanger(newState, color);
 
@@ -180,7 +180,7 @@ export const computeBestMove = (state, color, checkPossibleMoves) => {
       let attackRating = countAttackRating(color, {"x": newState[i].x, "y": newState[i].y}, {"x": newState[move.id - 1].x, "y": newState[move.id - 1].y});
       let totalCoverDiff = countTotalCoverDiff(color, state, newState, i + 1, move.id);
 
-      if(!bestMove.owner) {
+      if (!bestMove.owner) {
         bestMove = {owner: color, piece: state[i].piece, firstId: state[i].id, secondId: move.id};
       }
 
@@ -193,8 +193,8 @@ export const computeBestMove = (state, color, checkPossibleMoves) => {
 
       if (result === maxProfit && attackRating === maxAttackRating && totalCoverDiff > maxTotalCoverDiff && (profit >= danger || profit === 0)) {
         maxTotalCoverDiff = totalCoverDiff;
-        bestMove = {owner: color, piece: state[i].piece, firstId: state[i].id, secondId: move.id};        
-      } 
+        bestMove = {owner: color, piece: state[i].piece, firstId: state[i].id, secondId: move.id};
+      }
 
     });
 

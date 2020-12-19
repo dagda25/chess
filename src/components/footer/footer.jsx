@@ -11,7 +11,7 @@ const Footer = (props) => {
     <div className="footer">
       {
         log.map((el, index) => {
-          return <p key={index}>{index + 1}. {el}</p>
+          return <p key={index}>{index + 1}. {el}</p>;
         })
       }
     </div>
@@ -31,7 +31,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 Footer.propTypes = {
-
+  log: PropTypes.array,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Footer);

@@ -7,7 +7,7 @@ import {gameStatuses} from "../../const";
 
 const Header = (props) => {
   const [inputValue, setInputValue] = React.useState(`singleWhite`);
-  const {nextTurn, gameStatus, startGame, gameType} = props;
+  const {nextTurn, gameStatus, startGame} = props;
   const form = React.useRef(null);
 
   const handleFieldChange = (evt) => {
@@ -15,23 +15,30 @@ const Header = (props) => {
     startGame(evt.target.value);
   };
 
+  const getGameStatus = () => {
+    if (gameStatus) {
+      return gameStatuses[gameStatus];
+    }
+    return nextTurn === `black` ? `Ход чёрных` : `Ход белых`;
+  };
+
   return (
     <div className="header">
       <form className="game-menu" ref={form}>
-      	<input type="radio" id="menuOption1"
-      	 name="gameMenu" value="singleWhite" onChange={handleFieldChange} checked={inputValue === `singleWhite`}/>
-      	<label htmlFor="menuOption1">Играть белыми</label>
+        <input type="radio" id="menuOption1"
+          name="gameMenu" value="singleWhite" onChange={handleFieldChange} checked={inputValue === `singleWhite`}/>
+        <label htmlFor="menuOption1">Играть белыми</label>
 
-      	<input type="radio" id="menuOption2"
-      	 name="gameMenu" value="singleBlack" onChange={handleFieldChange} checked={inputValue === `singleBlack`}/>
-      	<label htmlFor="menuOption2">Играть чёрными</label>
+        <input type="radio" id="menuOption2"
+          name="gameMenu" value="singleBlack" onChange={handleFieldChange} checked={inputValue === `singleBlack`}/>
+        <label htmlFor="menuOption2">Играть чёрными</label>
 
-      	<input type="radio" id="menuOption3"
-      	 name="gameMenu" value="multi" onChange={handleFieldChange} checked={inputValue === `multi`}/>
-      	<label htmlFor="menuOption3">Играть вдвоём</label>
+        <input type="radio" id="menuOption3"
+          name="gameMenu" value="multi" onChange={handleFieldChange} checked={inputValue === `multi`}/>
+        <label htmlFor="menuOption3">Играть вдвоём</label>
       </form>
-      <div className="header-info">    
-        <div className="game-status">{gameStatuses.[gameStatus] ? gameStatuses.[gameStatus] : nextTurn === `black` ? `Ход чёрных` : `Ход белых`}</div>
+      <div className="header-info">
+        <div className="game-status">{getGameStatus()}</div>
       </div>
     </div>
   );
@@ -52,6 +59,9 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 Header.propTypes = {
+  nextTurn: PropTypes.string,
+  gameStatus: PropTypes.string,
+  startGame: PropTypes.func,
 
 };
 

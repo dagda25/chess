@@ -2,20 +2,17 @@ import React from "react";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
 import Field from "../field/field";
-import store from "../../store/store";
 import {ActionCreator} from "../../store/action";
 import {computeBestMove} from "../../services/compute-best-move";
-import {gameStatuses} from "../../const";
 
 const Board = (props) => {
   const {boardState, readyToMove, startMove, finishMove, nextTurn, AIMove, gameType, gameStatus} = props;
 
-  const computerTurn = (color) => {
+  const computerTurn = () => {
     AIMove(computeBestMove(boardState, nextTurn, checkPossibleMoves));
-  }
+  };
 
   const handlePieceClick = (evt) => {
-    //evt.dragStart = false;
     if (!evt.target.dataset.piece) {
       return;
     }
@@ -34,29 +31,31 @@ const Board = (props) => {
 
   };
 
-  const handleFieldClick = async (evt) => {
+  const handleFieldClick = (evt) => {
 
     const {id} = evt.target.dataset;
-  	if (!readyToMove) return false;
-  	if (boardState[id - 1].possibleMove && !isCheck(getNewState(boardState, readyToMove.id, id), readyToMove.owner)) {
-        
-        let prom = new Promise((resolve) => {
+    if (!readyToMove) {
+      return false;
+    }
+    if (boardState[id - 1].possibleMove && !isCheck(getNewState(boardState, readyToMove.id, id), readyToMove.owner)) {
+
+      let prom = new Promise((resolve) => {
         finishMove({readyToMove, id});
 
-        resolve()
+        resolve();
       });
       prom.then(() => {
         if (gameType !== `multi`) {
-          document.querySelector(".btn-hidden").click();        
+          document.querySelector(`.btn-hidden`).click();
         }
 
-      })
+      });
 
-  	} else {
+    } else {
       return false;
-  	}
+    }
 
-  }
+  };
 
   const getNewState = (state, idFrom, idTo) => {
     const newState = JSON.parse(JSON.stringify(state));
@@ -67,10 +66,6 @@ const Board = (props) => {
     newState[idFrom - 1].owner = null;
 
     return newState;
-  };
-
-  const invertColor = (color) => {
-    return color === `white` ? `black` : `white`;
   };
 
 
@@ -84,7 +79,7 @@ const Board = (props) => {
           if (el.piece === `king`) {
             check = true;
           }
-        })
+        });
 
       }
     });
@@ -92,11 +87,11 @@ const Board = (props) => {
   };
 
   const isReadyToMove = (readyToMove, id) => {
-  	if (readyToMove) {
-  		return readyToMove.id === id;
-  	}
-  	return false;
-  }
+    if (readyToMove) {
+      return readyToMove.id === id;
+    }
+    return false;
+  };
 
   return (
   <><button className="btn-hidden" onClick={() => computerTurn(nextTurn)}>t</button>
@@ -198,11 +193,9 @@ export const checkPossibleMoves = (boardState, piece, owner, x, y, id) => {
       });
 
       fields.forEach((field) => {
-        if (field.owner === owner) {
-
-        } else if (!field.owner) {
+        if (!field.owner) {
           possibleMoves.push(field);
-        } else {
+        } else if (field.owner && field.owner !== owner) {
           possibleMoves.push(field);
         }
 
@@ -299,10 +292,9 @@ export const checkPossibleMoves = (boardState, piece, owner, x, y, id) => {
       });
 
       fields.forEach((field) => {
-        if (field.owner === owner) {
-        } else if (!field.owner) {
+        if (!field.owner) {
           possibleMoves.push(field);
-        } else {
+        } else if (field.owner && field.owner !== owner) {
           possibleMoves.push(field);
         }
 
@@ -316,46 +308,46 @@ export const checkPossibleMoves = (boardState, piece, owner, x, y, id) => {
            && boardState[1].owner === null
            && boardState[2].owner === null
            && boardState[3].owner === null) {
-             possibleMoves.push(boardState.find((el) => {
-                return el.id === 3;
-             }))
-           }
+          possibleMoves.push(boardState.find((el) => {
+            return el.id === 3;
+          }));
+        }
 
-         if (owner === `black`
+        if (owner === `black`
             && boardState[7].owner === `black`
             && boardState[7].piece === `rook`
             && boardState[7].moved === false
             && boardState[6].owner === null
             && boardState[5].owner === null) {
-              possibleMoves.push(boardState.find((el) => {
-                 return el.id === 7;
-              }))            
-            }
+          possibleMoves.push(boardState.find((el) => {
+            return el.id === 7;
+          }));
+        }
 
-         if (owner === `white`
+        if (owner === `white`
             && boardState[63].owner === `white`
             && boardState[63].piece === `rook`
             && boardState[63].moved === false
             && boardState[62].owner === null
             && boardState[61].owner === null) {
-              possibleMoves.push(boardState.find((el) => {
-                 return el.id === 63;
-              }))
-            
-            }
+          possibleMoves.push(boardState.find((el) => {
+            return el.id === 63;
+          }));
 
-         if (owner === `white`
+        }
+
+        if (owner === `white`
             && boardState[56].owner === `white`
             && boardState[56].piece === `rook`
             && boardState[56].moved === false
             && boardState[57].owner === null
             && boardState[58].owner === null
             && boardState[59].owner === null) {
-              possibleMoves.push(boardState.find((el) => {
-                 return el.id === 59;
-              }))
-            
-            }
+          possibleMoves.push(boardState.find((el) => {
+            return el.id === 59;
+          }));
+
+        }
 
 
       }
@@ -572,7 +564,7 @@ export const checkPossibleMoves = (boardState, piece, owner, x, y, id) => {
           let field = boardState.find((el) => {
             return el.x === x && el.y === y - 1;
           });
-          if (field && !field.owner) { 
+          if (field && !field.owner) {
             possibleMoves.push(field);
           }
 
@@ -616,6 +608,12 @@ const mapDispatchToProps = (dispatch) => ({
 
 Board.propTypes = {
   boardState: PropTypes.array.isRequired,
+  readyToMove: PropTypes.object,
+  startMove: PropTypes.func.isRequired,
+  nextTurn: PropTypes.string,
+  AIMove: PropTypes.func.isRequired,
+  gameType: PropTypes.string.isRequired,
+  gameStatus: PropTypes.string,
 };
 
 
