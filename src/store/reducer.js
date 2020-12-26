@@ -628,6 +628,7 @@ const getStateOnStart = (state, data) => {
     newState.boardState[36].owner = `white`;
     newState.boardState[36].piece = `pawn`;
     newState.nextTurn = `black`;
+    newState.log.push(`white pawn from E2 to E4`);
   }
   return newState;
 };
