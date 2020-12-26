@@ -7,7 +7,7 @@ import {gameStatuses} from "../../const";
 
 const Header = (props) => {
   const [inputValue, setInputValue] = React.useState(`singleWhite`);
-  const {nextTurn, gameStatus, startGame} = props;
+  const {nextTurn, gameStatus, startGame, previousState, returnToPrevoiusMove} = props;
   const form = React.useRef(null);
 
   const handleFieldChange = (evt) => {
@@ -20,6 +20,15 @@ const Header = (props) => {
       return gameStatuses[gameStatus];
     }
     return nextTurn === `black` ? `Ход чёрных` : `Ход белых`;
+  };
+
+  const handleBackClick = () => {
+    if (!previousState.boardState) {
+      return false;
+    }
+    returnToPrevoiusMove();
+    return true;
+
   };
 
   return (
@@ -38,6 +47,7 @@ const Header = (props) => {
         <label htmlFor="menuOption3">Играть вдвоём</label>
       </form>
       <div className="header-info">
+        <div className={previousState.boardState ? `game-back` : `game-back game-back--inactive`} onClick={handleBackClick}><img src="img/back-arrow.png" alt="back" width="40" height="40"/></div>
         <div className="game-status">{getGameStatus()}</div>
       </div>
     </div>
@@ -49,6 +59,7 @@ const mapStateToProps = (data) => ({
   nextTurn: data.nextTurn,
   gameStatus: data.gameStatus,
   gameType: data.gameType,
+  previousState: data.previousState,
 });
 
 
@@ -56,12 +67,17 @@ const mapDispatchToProps = (dispatch) => ({
   startGame(data) {
     dispatch(ActionCreator.startGame(data));
   },
+  returnToPrevoiusMove() {
+    dispatch(ActionCreator.returnToPrevoiusMove());
+  },
 });
 
 Header.propTypes = {
   nextTurn: PropTypes.string,
   gameStatus: PropTypes.string,
   startGame: PropTypes.func,
+  previousState: PropTypes.object,
+  returnToPrevoiusMove: PropTypes.func,
 
 };
 

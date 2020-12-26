@@ -48,7 +48,7 @@
 .game-status {
   max-width: 200px;
   min-width: 150px;
-  margin: 20px auto 0;
+  margin-left: 20px;
   font-size: 20px;
   padding: 5px 10px;
   border: 2px solid black;
@@ -74,6 +74,8 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 20px;
 
 }
 
@@ -99,6 +101,10 @@
 .game-menu input[name="gameMenu"]:checked + label {
   border: 3px solid black;
   background-color: #C7FCB5;
+}
+
+.game-back--inactive {
+  opacity: 0.15;
 }
 
 .btn-hidden {

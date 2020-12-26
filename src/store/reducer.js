@@ -529,6 +529,7 @@ const initialState = {
   gameStatus: null,
   gameType: `singleWhite`,
   log: [],
+  previousState: {}
 };
 
 const getStateBeforeMove = (state, data) => {
@@ -608,6 +609,13 @@ const getStateAfterMove = (state, data) => {
   }
 
   newState.log.push(`${prevTurn} ${data.readyToMove.piece} from ${fieldNames[data.readyToMove.id]} to ${fieldNames[data.id]}`);
+
+  newState.previousState.boardState = JSON.parse(JSON.stringify(state.boardState));
+  newState.previousState.nextTurn = JSON.parse(JSON.stringify(state.nextTurn));
+  newState.previousState.gameStatus = JSON.parse(JSON.stringify(state.gameStatus));
+  newState.previousState.gameType = JSON.parse(JSON.stringify(state.gameType));
+  newState.previousState.log = JSON.parse(JSON.stringify(state.log));
+
   return newState;
 };
 
@@ -657,6 +665,25 @@ const getStateAfterAIMove = (state, data) => {
   }
 
   newState.log.push(`${prevTurn} ${data.piece} from ${fieldNames[data.firstId]} to ${fieldNames[data.secondId]}`);
+
+  return newState;
+};
+
+const getPreviousState = (state) => {
+  const newState = JSON.parse(JSON.stringify(state));
+
+  newState.boardState = JSON.parse(JSON.stringify(state.previousState.boardState));
+  newState.boardState.map((field) => {
+    field.possibleMove = false;
+    return field;
+  });
+  newState.nextTurn = JSON.parse(JSON.stringify(state.previousState.nextTurn));
+  newState.gameStatus = JSON.parse(JSON.stringify(state.previousState.gameStatus));
+  newState.gameType = JSON.parse(JSON.stringify(state.previousState.gameType));
+  newState.log = JSON.parse(JSON.stringify(state.previousState.log));
+
+  newState.previousState = {};
+
   return newState;
 };
 
@@ -720,6 +747,8 @@ const reducer = (state = initialState, action) => {
       return getStateAfterAIMove(state, action.payload);
     case ActionType.START_GAME:
       return getStateOnStart(initialState, action.payload);
+    case ActionType.RETURN_TO_PREVIOUS_MOVE:
+      return getPreviousState(state);
     default:
       return state;
   }
