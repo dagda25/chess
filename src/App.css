@@ -17,8 +17,8 @@
 
 .field {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: left;
+  align-items: flex-start;
   width: 100px;
   height: 100px;
   max-width: 12.5%;
@@ -36,6 +36,18 @@
 
 .field-black {
   background-color:#A67300;
+}
+
+.field-tooltip {
+  display: none;
+}
+
+.field:hover .field-tooltip {
+  display: block;
+  position: absolute;
+  font-size: 12px;
+  margin-top: 1px;
+  margin-left: 1px;
 }
 
 .piece {

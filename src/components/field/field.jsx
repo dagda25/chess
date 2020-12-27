@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import {fieldNames} from "../../const";
 
 const Field = (props) => {
   const {fieldState, readyToMove, handlePieceClick, handleFieldClick} = props;
@@ -39,6 +40,7 @@ const Field = (props) => {
           <img className="piece" src={getImageSrc()} onClick={handlePieceClick} onDragStart={(event) => event.preventDefault()} data-piece={piece} data-owner={owner} data-id={id}/>
           : null
         }
+        <div className="field-tooltip">{fieldNames[id]}</div>
       </div>
     </>
   );
