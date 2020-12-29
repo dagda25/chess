@@ -10,11 +10,10 @@ export const computeBestMove = (state, color, checkPossibleMoves) => {
   const isCheck = (state, color) => {
     let check = false;
     state.forEach((el) => {
-      if (el.owner && el.owner !== color) {
+      if (el.owner === color) {
         const possibleMoves = checkPossibleMoves(state, el.piece, el.owner, el.x, el.y, el.id);
-
-        possibleMoves.forEach((el) => {
-          if (el.piece === `king`) {
+        possibleMoves.forEach((m) => {
+          if (m.piece === `king`) {
             check = true;
           }
         });
@@ -22,6 +21,25 @@ export const computeBestMove = (state, color, checkPossibleMoves) => {
       }
     });
     return check;
+  };
+
+  const isCheckmate = (state, color) => {
+    let checkmate = true;
+
+    for (let i = 0; i < state.length; i++) {
+      if (state[i].owner !== color) {
+        continue;
+      }
+      let moves = checkPossibleMoves(state, state[i].piece, state[i].owner, state[i].x, state[i].y, state[i].id);
+      moves.forEach((move) => {
+        const newState = getNewState(state, i + 1, move.id);
+        if (!isCheck(newState, invertColor(color))) {
+          checkmate = false;
+        }
+      });
+    }
+
+    return checkmate;
   };
 
   const countDanger = (state, color) => {
@@ -132,6 +150,7 @@ export const computeBestMove = (state, color, checkPossibleMoves) => {
     if (state[i].owner !== color) {
       continue;
     }
+
     let moves = checkPossibleMoves(state, state[i].piece, state[i].owner, state[i].x, state[i].y, state[i].id);
     const currentDanger = countDanger(state, color);
 
@@ -143,8 +162,18 @@ export const computeBestMove = (state, color, checkPossibleMoves) => {
     moves.forEach((move) => {
 
       let profit = move.owner ? pieceValue[move.piece] : 0;
+      if (state[i].piece === `queen` && move.id === 59) {
+        debugger
+      }
 
       const newState = getNewState(state, i + 1, move.id);
+      const checkMate = isCheckmate(newState, invertColor(color));
+      console.log(checkMate, newState, invertColor(color))
+
+      if (checkMate) {
+        debugger
+        profit = 999;
+      }
 
       const danger = countDanger(newState, color);
 

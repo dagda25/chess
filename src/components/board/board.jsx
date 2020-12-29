@@ -75,8 +75,8 @@ const Board = (props) => {
     state.forEach((el) => {
       if (el.owner && el.owner !== color) {
         const possibleMoves = checkPossibleMoves(state, el.piece, el.owner, el.x, el.y, el.id);
-        possibleMoves.forEach((el) => {
-          if (el.piece === `king`) {
+        possibleMoves.forEach((m) => {
+          if (m.piece === `king`) {
             check = true;
           }
         });
