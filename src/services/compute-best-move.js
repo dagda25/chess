@@ -162,16 +162,11 @@ export const computeBestMove = (state, color, checkPossibleMoves) => {
     moves.forEach((move) => {
 
       let profit = move.owner ? pieceValue[move.piece] : 0;
-      if (state[i].piece === `queen` && move.id === 59) {
-        debugger
-      }
 
       const newState = getNewState(state, i + 1, move.id);
       const checkMate = isCheckmate(newState, invertColor(color));
-      console.log(checkMate, newState, invertColor(color))
 
       if (checkMate) {
-        debugger
         profit = 999;
       }
 
