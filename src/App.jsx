@@ -11,7 +11,7 @@ import {ActionCreator} from "./store/action";
 function App(props) {
   const {loadGame} = props;
   const onLoad = () => {
-    if (localStorage.chessState) {
+    if (localStorage.chessState && JSON.parse(localStorage.chessState).nextTurn) {
       loadGame(JSON.parse(localStorage.chessState));
     }
   };
