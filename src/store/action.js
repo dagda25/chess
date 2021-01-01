@@ -4,6 +4,7 @@ export const ActionType = {
   START_GAME: `START_GAME`,
   AI_MOVE: `AI_MOVE`,
   RETURN_TO_PREVIOUS_MOVE: `RETURN_TO_PREVIOUS_MOVE`,
+  LOAD_GAME: `LOAD_GAME`,
 };
 
 export const ActionCreator = {
@@ -25,6 +26,10 @@ export const ActionCreator = {
   }),
   returnToPrevoiusMove: (data) => ({
     type: ActionType.RETURN_TO_PREVIOUS_MOVE,
+    payload: data
+  }),
+  loadGame: (data) => ({
+    type: ActionType.LOAD_GAME,
     payload: data
   }),
 };

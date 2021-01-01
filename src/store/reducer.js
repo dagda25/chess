@@ -541,6 +541,7 @@ const getStateBeforeMove = (state, data) => {
     newState.boardState[move.id - 1].possibleMove = true;
   });
   newState.readyToMove = {piece: data.piece, owner: data.owner, id: data.id};
+  localStorage.setItem(`chessState`, JSON.stringify(newState));
   return newState;
 };
 
@@ -615,6 +616,7 @@ const getStateAfterMove = (state, data) => {
   newState.previousState.gameStatus = JSON.parse(JSON.stringify(state.gameStatus));
   newState.previousState.gameType = JSON.parse(JSON.stringify(state.gameType));
   newState.previousState.log = JSON.parse(JSON.stringify(state.log));
+
 
   return newState;
 };
@@ -734,6 +736,10 @@ const getNewState = (state, idFrom, idTo) => {
   return newState;
 };
 
+const getStateAfterLoad = (state, data) => {
+  return data;
+};
+
 const invertColor = (color) => {
   return color === `white` ? `black` : `white`;
 };
@@ -746,6 +752,8 @@ const reducer = (state = initialState, action) => {
       return getStateAfterMove(state, action.payload);
     case ActionType.AI_MOVE:
       return getStateAfterAIMove(state, action.payload);
+    case ActionType.LOAD_GAME:
+      return getStateAfterLoad(state, action.payload);
     case ActionType.START_GAME:
       return getStateOnStart(initialState, action.payload);
     case ActionType.RETURN_TO_PREVIOUS_MOVE:

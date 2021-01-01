@@ -4,8 +4,18 @@ import React from 'react';
 import Board from "./components/board/board";
 import Header from "./components/header/header";
 import Footer from "./components/footer/footer";
+import PropTypes from "prop-types";
+import {connect} from "react-redux";
+import {ActionCreator} from "./store/action";
 
-function App() {
+function App(props) {
+  const {loadGame} = props;
+  const onLoad = () => {
+    if (localStorage.chessState) {
+      loadGame(JSON.parse(localStorage.chessState));
+    }
+  };
+  document.addEventListener(`DOMContentLoaded`, onLoad);
   return (
     <div className="App">
       <Header />
@@ -15,4 +25,10 @@ function App() {
   );
 }
 
-export default App;
+const mapDispatchToProps = (dispatch) => ({
+  loadGame(data) {
+    dispatch(ActionCreator.loadGame(data));
+  }
+});
+
+export default connect(null, mapDispatchToProps)(App);
