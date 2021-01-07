@@ -35,15 +35,15 @@ const Header = (props) => {
     <div className="header">
       <form className="game-menu" ref={form}>
         <input type="radio" id="menuOption1"
-          name="gameMenu" value="singleWhite" onChange={handleFieldChange} checked={inputValue === `singleWhite`}/>
+          name="gameMenu" value="singleWhite" onClick={handleFieldChange} defaultChecked={inputValue === `singleWhite`}/>
         <label htmlFor="menuOption1">Играть белыми</label>
 
         <input type="radio" id="menuOption2"
-          name="gameMenu" value="singleBlack" onChange={handleFieldChange} checked={inputValue === `singleBlack`}/>
+          name="gameMenu" value="singleBlack" onClick={handleFieldChange} defaultChecked={inputValue === `singleBlack`}/>
         <label htmlFor="menuOption2">Играть чёрными</label>
 
         <input type="radio" id="menuOption3"
-          name="gameMenu" value="multi" onChange={handleFieldChange} checked={inputValue === `multi`}/>
+          name="gameMenu" value="multi" onClick={handleFieldChange} defaultChecked={inputValue === `multi`}/>
         <label htmlFor="menuOption3">Играть вдвоём</label>
       </form>
       <div className="header-info">

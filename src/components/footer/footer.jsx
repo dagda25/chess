@@ -6,12 +6,15 @@ import {ActionCreator} from "../../store/action";
 
 const Footer = (props) => {
   const {log} = props;
+  log.reverse();
+  let logLength = log.length + 1;
 
   return (
     <div className="footer">
       {
         log.map((el, index) => {
-          return <p key={index}>{index + 1}. {el}</p>;
+          logLength--;
+          return <p key={index}>{logLength}. {el}</p>;
         })
       }
     </div>

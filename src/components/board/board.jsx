@@ -6,7 +6,7 @@ import {ActionCreator} from "../../store/action";
 import {computeBestMove} from "../../services/compute-best-move";
 
 const Board = (props) => {
-  const {boardState, readyToMove, startMove, finishMove, nextTurn, AIMove, gameType, gameStatus} = props;
+  const {boardState, readyToMove, startMove, finishMove, nextTurn, AIMove, gameType, gameStatus, lastTurnFrom, lastTurnTo} = props;
 
   const computerTurn = () => {
     AIMove(computeBestMove(boardState, nextTurn, checkPossibleMoves));
@@ -98,7 +98,7 @@ const Board = (props) => {
     <div className="board" style={{opacity: (gameStatus && gameStatus.includes(`checkmate`)) ? 0.4 : 1}}>
       {boardState.map((field) => {
         return (
-          <Field key={field.id} fieldState={field} readyToMove={isReadyToMove(readyToMove, field.id)} handlePieceClick={handlePieceClick} handleFieldClick={handleFieldClick}/>
+          <Field key={field.id} lastTurnFrom={lastTurnFrom === field.id} lastTurnTo={lastTurnTo === field.id} fieldState={field} readyToMove={isReadyToMove(readyToMove, field.id)} handlePieceClick={handlePieceClick} handleFieldClick={handleFieldClick}/>
         );
       })}
     </div>
@@ -591,6 +591,8 @@ const mapStateToProps = (data) => ({
   nextTurn: data.nextTurn,
   gameType: data.gameType,
   gameStatus: data.gameStatus,
+  lastTurnFrom: data.lastTurnFrom,
+  lastTurnTo: data.lastTurnTo,
 });
 
 
@@ -614,6 +616,8 @@ Board.propTypes = {
   AIMove: PropTypes.func.isRequired,
   gameType: PropTypes.string.isRequired,
   gameStatus: PropTypes.string,
+  lastTurnFrom: PropTypes.number,
+  lastTurnTo: PropTypes.number,
 };
 
 

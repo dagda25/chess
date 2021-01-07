@@ -529,6 +529,8 @@ const initialState = {
   gameStatus: null,
   gameType: `singleWhite`,
   log: [],
+  lastTurnFrom: null,
+  lastTurnTo: null,
   previousState: {}
 };
 
@@ -610,12 +612,16 @@ const getStateAfterMove = (state, data) => {
   }
 
   newState.log.push(`${prevTurn} ${data.readyToMove.piece} from ${fieldNames[data.readyToMove.id]} to ${fieldNames[data.id]}`);
+  newState.lastTurnFrom = +data.readyToMove.id;
+  newState.lastTurnTo = +data.id;
 
   newState.previousState.boardState = JSON.parse(JSON.stringify(state.boardState));
   newState.previousState.nextTurn = JSON.parse(JSON.stringify(state.nextTurn));
   newState.previousState.gameStatus = JSON.parse(JSON.stringify(state.gameStatus));
   newState.previousState.gameType = JSON.parse(JSON.stringify(state.gameType));
   newState.previousState.log = JSON.parse(JSON.stringify(state.log));
+  newState.previousState.lastTurnFrom = JSON.parse(JSON.stringify(state.lastTurnFrom));
+  newState.previousState.lastTurnTo = JSON.parse(JSON.stringify(state.lastTurnTo));
 
 
   return newState;
@@ -668,6 +674,8 @@ const getStateAfterAIMove = (state, data) => {
   }
 
   newState.log.push(`${prevTurn} ${data.piece} from ${fieldNames[data.firstId]} to ${fieldNames[data.secondId]}`);
+  newState.lastTurnFrom = +data.firstId;
+  newState.lastTurnTo = +data.secondId;
 
   return newState;
 };

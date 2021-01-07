@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import {fieldNames} from "../../const";
 
 const Field = (props) => {
-  const {fieldState, readyToMove, handlePieceClick, handleFieldClick} = props;
+  const {fieldState, readyToMove, handlePieceClick, handleFieldClick, lastTurnFrom, lastTurnTo} = props;
   const {id, x, y, piece, owner, possibleMove} = fieldState;
   const isWhite = () => {
     if (y % 2 === 1) {
@@ -23,6 +23,12 @@ const Field = (props) => {
     }
     if (readyToMove) {
       return `3px solid #FFB01E`;
+    }
+    if (lastTurnFrom) {
+      return `3px solid #FFB0FF`;
+    }
+    if (lastTurnTo) {
+      return `3px solid #FFB0FF`;
     }
     return `none`;
   };
@@ -52,7 +58,8 @@ Field.propTypes = {
   handlePieceClick: PropTypes.func,
   handleFieldClick: PropTypes.func,
   readyToMove: PropTypes.bool,
-
+  lastTurnFrom: PropTypes.number,
+  lastTurnTo: PropTypes.number,
 
 };
 
