@@ -58,8 +58,8 @@ Field.propTypes = {
   handlePieceClick: PropTypes.func,
   handleFieldClick: PropTypes.func,
   readyToMove: PropTypes.bool,
-  lastTurnFrom: PropTypes.number,
-  lastTurnTo: PropTypes.number,
+  lastTurnFrom: PropTypes.bool,
+  lastTurnTo: PropTypes.bool,
 
 };
 

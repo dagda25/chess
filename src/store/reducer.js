@@ -692,6 +692,8 @@ const getPreviousState = (state) => {
   newState.gameStatus = JSON.parse(JSON.stringify(state.previousState.gameStatus));
   newState.gameType = JSON.parse(JSON.stringify(state.previousState.gameType));
   newState.log = JSON.parse(JSON.stringify(state.previousState.log));
+  newState.lastTurnFrom = JSON.parse(JSON.stringify(state.previousState.lastTurnFrom));
+  newState.lastTurnTo = JSON.parse(JSON.stringify(state.previousState.lastTurnTo));
 
   newState.previousState = {};
 
