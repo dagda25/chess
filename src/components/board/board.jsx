@@ -48,7 +48,10 @@ const Board = (props) => {
         if (gameType !== `multi`) {
           document.querySelector(`.btn-hidden`).click();
         }
-
+        let player = new Audio();
+        player.volume = 0.4;
+        player.src = `https://images.chesscomfiles.com/chess-themes/sounds/_WEBM_/default/move-self.webm`;
+        player.play();
       });
 
     } else {
