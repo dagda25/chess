@@ -80,9 +80,12 @@ export const computeBestMove = (state, color, checkPossibleMoves) => {
     return newState;
   };
 
-  const countAttackRating = (color, from, to) => {
+  const countAttackRating = (color, from, to, piece) => {
     let yDiff;
     let xDiff;
+    if (piece === `king`) {
+      return -1;
+    }
     if (color === `black`) {
       yDiff = to.y - from.y;
       if (from.y === 1 && to.y === 2) {
@@ -118,9 +121,12 @@ export const computeBestMove = (state, color, checkPossibleMoves) => {
     return movesAfter.length - movesBefore.length;
   };
 
-  const countTotalCoverDiff = (color, state, newState, idFrom, idTo) => {
+  const countTotalCoverDiff = (color, state, newState, idFrom, idTo, piece) => {
     let totalCoverBefore = 0;
     let totalCoverAfter = 0;
+    if (piece === `king`) {
+      return -1;
+    }
     for (let i = 0; i < state.length; i++) {
       if (state[i].owner !== color) {
         continue;
@@ -166,7 +172,7 @@ export const computeBestMove = (state, color, checkPossibleMoves) => {
       const newState = getNewState(state, i + 1, move.id);
       const checkMate = isCheckmate(newState, invertColor(color));
 
-      if (checkMate) {
+      if (checkMate && !isCheck(newState, color)) {
         profit = 999;
       }
 
@@ -201,8 +207,8 @@ export const computeBestMove = (state, color, checkPossibleMoves) => {
         result = result + 0.5;
       }
 
-      let attackRating = countAttackRating(color, {"x": newState[i].x, "y": newState[i].y}, {"x": newState[move.id - 1].x, "y": newState[move.id - 1].y});
-      let totalCoverDiff = countTotalCoverDiff(color, state, newState, i + 1, move.id);
+      let attackRating = countAttackRating(color, {"x": newState[i].x, "y": newState[i].y}, {"x": newState[move.id - 1].x, "y": newState[move.id - 1].y}, move.piece);
+      let totalCoverDiff = countTotalCoverDiff(color, state, newState, i + 1, move.id, move.piece);
 
       if (!bestMove.owner) {
         bestMove = {owner: color, piece: state[i].piece, firstId: state[i].id, secondId: move.id};
