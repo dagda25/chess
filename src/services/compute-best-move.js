@@ -112,7 +112,7 @@ export const computeBestMove = (state, color, checkPossibleMoves) => {
       }
     }
 
-    return yDiff * 2 + xDiff / 2;
+    return piece === `pawn` ? yDiff * 2 + xDiff / 2 + 1 : yDiff * 2 + xDiff / 2;
   };
 
   const countCoverDiff = (color, state, newState, idFrom, idTo) => {
@@ -207,8 +207,8 @@ export const computeBestMove = (state, color, checkPossibleMoves) => {
         result = result + 0.5;
       }
 
-      let attackRating = countAttackRating(color, {"x": newState[i].x, "y": newState[i].y}, {"x": newState[move.id - 1].x, "y": newState[move.id - 1].y}, move.piece);
-      let totalCoverDiff = countTotalCoverDiff(color, state, newState, i + 1, move.id, move.piece);
+      let attackRating = countAttackRating(color, {"x": newState[i].x, "y": newState[i].y}, {"x": newState[move.id - 1].x, "y": newState[move.id - 1].y}, state[i].piece);
+      let totalCoverDiff = countTotalCoverDiff(color, state, newState, i + 1, move.id, state[i].piece);
 
       if (!bestMove.owner) {
         bestMove = {owner: color, piece: state[i].piece, firstId: state[i].id, secondId: move.id};
@@ -229,6 +229,7 @@ export const computeBestMove = (state, color, checkPossibleMoves) => {
     });
 
   }
+  console.log(bestMove, maxProfit, maxAttackRating, maxTotalCoverDiff)
   return bestMove;
 };
 
