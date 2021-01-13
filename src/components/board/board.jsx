@@ -33,7 +33,7 @@ const Board = (props) => {
 
   const handleFieldClick = (evt) => {
 
-    const {id} = evt.target.dataset;
+    const {id} = evt.target.closest(`div.field`).dataset;
     if (!readyToMove) {
       return false;
     }

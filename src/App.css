@@ -16,9 +16,10 @@
 }
 
 .field {
+  position: relative;
   display: flex;
-  justify-content: left;
-  align-items: flex-start;
+  justify-content: center;
+  align-items: center;
   width: 100px;
   height: 100px;
   max-width: 12.5%;
@@ -45,6 +46,8 @@
 .field:hover .field-tooltip {
   display: block;
   position: absolute;
+  left: 0;
+  top: 0;
   font-size: 12px;
   margin-top: 1px;
   margin-left: 1px;
@@ -53,8 +56,8 @@
 .piece {
   width: 94px;
   height: 94px;
-  max-width: 10vh;
-  max-height: 10vh;
+  max-width: 9.5vh;
+  max-height: 9.5vh;
 }
 
 .game-status {

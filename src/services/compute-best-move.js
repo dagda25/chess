@@ -81,16 +81,24 @@ export const computeBestMove = (state, color, checkPossibleMoves) => {
   };
 
   const countAttackRating = (color, from, to, piece) => {
-    let yDiff;
-    let xDiff;
+    let yDiff = 0;
+    let xDiff = 0;
     if (piece === `king`) {
       return -1;
     }
+
+    if (piece === `pawn` && color === `black` && to.y === 8) {
+      return 100;
+    }
+    if (piece === `pawn` && color === `white` && to.y === 1) {
+      return 100;
+    }
+
     if (color === `black`) {
       yDiff = to.y - from.y;
-      if (from.y === 1 && to.y === 2) {
+      /*if (from.y === 1 && to.y === 2) {
         yDiff = -1;
-      }
+      }*/
 
       if (to.x < 5) {
         xDiff = to.x;
@@ -101,9 +109,9 @@ export const computeBestMove = (state, color, checkPossibleMoves) => {
 
     if (color === `white`) {
       yDiff = from.y - to.y;
-      if (from.y === 8 && to.y === 7) {
+      /*if (from.y === 8 && to.y === 7) {
         yDiff = -1;
-      }
+      }*/
 
       if (to.x < 5) {
         xDiff = to.x;
@@ -111,8 +119,14 @@ export const computeBestMove = (state, color, checkPossibleMoves) => {
         xDiff = 9 - to.x;
       }
     }
+    if (piece === `pawn` && (from.y - to.y === 2 || from.y - to.y === -2)) {
+      yDiff = 3;
+    }
+    return yDiff + xDiff;
 
-    return piece === `pawn` ? yDiff * 2 + xDiff / 2 + 1 : yDiff * 2 + xDiff / 2;
+    //return piece === `pawn` ? yDiff * 2 + xDiff / 2 + 1 : yDiff * 2 + xDiff / 2;
+
+
   };
 
   const countCoverDiff = (color, state, newState, idFrom, idTo) => {
@@ -151,6 +165,7 @@ export const computeBestMove = (state, color, checkPossibleMoves) => {
   let maxAttackRating = 0;
   let maxCoverDiff = -50;
   let maxTotalCoverDiff = -100;
+  const currentDanger = countDanger(state, color);
 
   for (let i = 0; i < state.length; i++) {
     if (state[i].owner !== color) {
@@ -158,7 +173,6 @@ export const computeBestMove = (state, color, checkPossibleMoves) => {
     }
 
     let moves = checkPossibleMoves(state, state[i].piece, state[i].owner, state[i].x, state[i].y, state[i].id);
-    const currentDanger = countDanger(state, color);
 
     if (!moves.length) {
       continue;
@@ -189,8 +203,9 @@ export const computeBestMove = (state, color, checkPossibleMoves) => {
           continue;
         }
 
-        oppMoves.forEach((oppMove) => {
-          const stateAfterOppMove = getNewState(newState, j + 1, oppMove.id);
+        oppMoves.forEach(oppMove => {
+          const stateAfterOppMove = getNewState(newState, j + 1, oppMove.id);  
+
           let oppDanger = countDanger(stateAfterOppMove, invertColor(color));
           if (isCheck(stateAfterOppMove, color)) {
             oppDanger = oppDanger - 0.5;
@@ -201,35 +216,38 @@ export const computeBestMove = (state, color, checkPossibleMoves) => {
         });
       }
 
-      let result = profit - danger + currentDanger + minOppDanger;
+      let result = profit * 1.1 - danger * 1.05  + minOppDanger;
 
-      if (isCheck(newState, invertColor(color))) {
-        result = result + 0.5;
-      }
+      if (result >= maxProfit) {
+        if (isCheck(newState, color)) {
+          result = result + 0.5;
+        }
 
-      let attackRating = countAttackRating(color, {"x": newState[i].x, "y": newState[i].y}, {"x": newState[move.id - 1].x, "y": newState[move.id - 1].y}, state[i].piece);
-      let totalCoverDiff = countTotalCoverDiff(color, state, newState, i + 1, move.id, state[i].piece);
+        let attackRating = countAttackRating(color, {"x": newState[i].x, "y": newState[i].y}, {"x": newState[move.id - 1].x, "y": newState[move.id - 1].y}, state[i].piece);
+        let totalCoverDiff = countTotalCoverDiff(color, state, newState, i + 1, move.id, state[i].piece);
 
-      if (!bestMove.owner) {
-        bestMove = {owner: color, piece: state[i].piece, firstId: state[i].id, secondId: move.id};
-      }
+        if (!bestMove.owner) {
+          bestMove = {owner: color, piece: state[i].piece, firstId: state[i].id, secondId: move.id};
+        }
 
-      if ((result > maxProfit || (result === maxProfit && attackRating + totalCoverDiff > maxAttackRating + maxTotalCoverDiff)) && (profit >= danger || profit === 0)) {
-        maxProfit = result;
-        maxAttackRating = attackRating;
-        maxTotalCoverDiff = totalCoverDiff;
-        bestMove = {owner: color, piece: state[i].piece, firstId: state[i].id, secondId: move.id};
-      }
+        if ((result > maxProfit || (result === maxProfit && attackRating + totalCoverDiff > maxAttackRating + maxTotalCoverDiff)) && (profit >= danger || profit === 0)) {
+          maxProfit = result;
+          console.log(profit, danger, minOppDanger, `result:`, maxProfit, maxAttackRating, maxTotalCoverDiff)
+          maxAttackRating = attackRating;
+          maxTotalCoverDiff = totalCoverDiff;
+          bestMove = {owner: color, piece: state[i].piece, firstId: state[i].id, secondId: move.id};
+        }
 
-      if (result === maxProfit && attackRating === maxAttackRating && totalCoverDiff > maxTotalCoverDiff && (profit >= danger || profit === 0)) {
-        maxTotalCoverDiff = totalCoverDiff;
-        bestMove = {owner: color, piece: state[i].piece, firstId: state[i].id, secondId: move.id};
+        if (result === maxProfit && attackRating === maxAttackRating && totalCoverDiff > maxTotalCoverDiff && (profit >= danger || profit === 0)) {
+          maxTotalCoverDiff = totalCoverDiff;
+          bestMove = {owner: color, piece: state[i].piece, firstId: state[i].id, secondId: move.id};
+        }
       }
 
     });
 
   }
-  console.log(bestMove, maxProfit, maxAttackRating, maxTotalCoverDiff)
+  console.log(bestMove, `maxProfit`, maxProfit, `maxAttackRating`, maxAttackRating, `maxTotalCoverDiff`, maxTotalCoverDiff)
   return bestMove;
 };
 
