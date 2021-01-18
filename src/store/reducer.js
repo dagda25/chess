@@ -656,14 +656,47 @@ const getStateAfterAIMove = (state, data) => {
     newState.boardState[data.secondId - 1].piece = `queen`;
   }
 
+  if (data.piece === `king` && +data.firstId === 3 && +data.secondId === 5) {
+    newState.boardState[0].owner = null;
+    newState.boardState[0].piece = null;
+    newState.boardState[0].moved = true;
+    newState.boardState[3].owner = `black`;
+    newState.boardState[3].piece = `rook`;
+  }
+
+  if (data.piece === `king` && +data.firstId === 7 && +data.secondId === 5) {
+    newState.boardState[7].owner = null;
+    newState.boardState[7].piece = null;
+    newState.boardState[7].moved = true;
+    newState.boardState[5].owner = `black`;
+    newState.boardState[5].piece = `rook`;
+  }
+
+  if (data.piece === `king` && +data.firstId === 59 && +data.secondId === 61) {
+    newState.boardState[56].owner = null;
+    newState.boardState[56].piece = null;
+    newState.boardState[56].moved = true;
+    newState.boardState[59].owner = `white`;
+    newState.boardState[59].piece = `rook`;
+  }
+
+  if (data.piece === `king` && +data.firstId === 63 && +data.secondId === 61) {
+    newState.boardState[63].owner = null;
+    newState.boardState[63].piece = null;
+    newState.boardState[63].moved = true;
+    newState.boardState[61].owner = `white`;
+    newState.boardState[61].piece = `rook`;
+  }
+
+  if (data.piece === `king` || data.piece === `rook`) {
+    newState.boardState[data.secondId - 1].moved = true;
+  }
+
   newState.readyToMove = null;
   newState.boardState.forEach((field) => {
     field.possibleMove = false;
   });
 
-  if (data.piece === `king` || data.piece === `rook`) {
-    newState.boardState[data.firstId - 1].moved = true;
-  }
 
   newState.nextTurn = prevTurn === `white` ? `black` : `white`;
   newState.gameStatus = isCheck(newState.boardState, prevTurn) ? newState.nextTurn : null;

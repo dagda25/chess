@@ -96,9 +96,6 @@ export const computeBestMove = (state, color, checkPossibleMoves) => {
 
     if (color === `black`) {
       yDiff = to.y - from.y;
-      /*if (from.y === 1 && to.y === 2) {
-        yDiff = -1;
-      }*/
 
       if (to.x < 5) {
         xDiff = to.x;
@@ -109,9 +106,6 @@ export const computeBestMove = (state, color, checkPossibleMoves) => {
 
     if (color === `white`) {
       yDiff = from.y - to.y;
-      /*if (from.y === 8 && to.y === 7) {
-        yDiff = -1;
-      }*/
 
       if (to.x < 5) {
         xDiff = to.x;
@@ -122,6 +116,11 @@ export const computeBestMove = (state, color, checkPossibleMoves) => {
     if (piece === `pawn` && (from.y - to.y === 2 || from.y - to.y === -2)) {
       yDiff = 3;
     }
+    if (piece === `knight`) {
+      yDiff = yDiff + 1;
+      xDiff = xDiff + 1;
+    }
+
     return yDiff + xDiff;
 
     //return piece === `pawn` ? yDiff * 2 + xDiff / 2 + 1 : yDiff * 2 + xDiff / 2;
@@ -216,11 +215,12 @@ export const computeBestMove = (state, color, checkPossibleMoves) => {
         });
       }
 
-      let result = profit * 1.1 - danger * 1.05  + minOppDanger;
+      let result = +(profit * 1.1 - danger * 1.05  + minOppDanger).toFixed(2);
+      console.log(profit * 1.1, danger * 1.05, minOppDanger)
 
       if (result >= maxProfit) {
         if (isCheck(newState, color)) {
-          result = result + 0.5;
+          result = +result + 0.5;
         }
 
         let attackRating = countAttackRating(color, {"x": newState[i].x, "y": newState[i].y}, {"x": newState[move.id - 1].x, "y": newState[move.id - 1].y}, state[i].piece);
@@ -247,7 +247,7 @@ export const computeBestMove = (state, color, checkPossibleMoves) => {
     });
 
   }
-  console.log(bestMove, `maxProfit`, maxProfit, `maxAttackRating`, maxAttackRating, `maxTotalCoverDiff`, maxTotalCoverDiff)
+  console.log(bestMove, `maxProfit:`, maxProfit, `maxAttackRating:`, maxAttackRating, `maxTotalCoverDiff:`, maxTotalCoverDiff)
   return bestMove;
 };
 
